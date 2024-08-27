@@ -1,0 +1,182 @@
+$quaternarycolor: #11263C;
+
+$primaryfontcolor: #333;
+
+$primarybackground: #F7F8FC;
+
+$fonte1 : 'Montserrat';
+
+$fonte2 : 'Inter';
+
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Thin.ttf') format('truetype'); 
+    font-weight: 100;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-ExtraLight.ttf') format('truetype'); 
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Light.ttf') format('truetype'); 
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'Inter';
+	src: url('/fonts/Inter-Regular.ttf') format('truetype'); 
+    font-weight: 400;
+}
+@font-face {
+	font-family: 'Inter';
+	src: url('/fonts/Inter-Medium.ttf') format('truetype'); 
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-SemiBold.ttf') format('truetype'); 
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Bold.ttf') format('truetype'); 
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-ExtraBold.ttf') format('truetype'); 
+    font-weight: 800;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Black.ttf') format('truetype'); 
+    font-weight: 900;
+}
+
+html{
+    overflow-y: auto;
+}
+
+body{
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 1.1rem;  
+    font-weight: 300;
+    line-height: 2;
+	color: $primaryfontcolor;
+}
+
+.row{
+    margin: 0 -12px !important;
+}
+
+.img-responsive{
+	width: auto;
+	margin: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.img-login{
+	width: auto;
+	margin: auto;
+	height: auto;
+	max-width: 50%;
+	max-height: 50%;
+}
+
+a{
+	text-decoration: none !important;
+	&:focus,
+	&:hover{
+		text-decoration: none !important;
+	}
+}
+
+*{
+    outline: none !important;
+    &:focus{
+        outline: none !important;
+    }
+}
+.loader{
+    background-color: var(--terciary-color) !important;
+    color: #fff !important;
+}
+.primary-button{
+    background-color: var(--terciary-color) !important;
+    color: #fff !important;
+    border: 1px solid var(--terciary-color);
+    border-radius: 20px;
+    text-transform: capitalize;
+    padding: 0 20px !important;
+    transition: all ease .3s;
+    span{
+        font-size: 16px;    
+    }
+    &:hover{
+        background-color: #fff !important;
+        color: var(--terciary-color) !important;
+    }
+}
+
+.secondary-button{
+    background-color: #11263C !important;
+    color: #fff !important;
+    border: 1px solid #11263C;
+    border-radius: 20px;
+    text-transform: capitalize;
+    padding: 0 20px !important;
+    transition: all ease .3s;
+    span{
+        font-size: 16px;
+    }
+    &:hover{
+        background-color: #fff !important;
+        color: #11263C !important;
+    }
+}
+
+.warning-button{
+    background-color: var(--warning-color) !important;
+    color: #fff !important;
+    border: 1px solid var(--warning-color);
+    border-radius: 20px;
+    text-transform: capitalize;
+    padding: 0 20px !important;
+    transition: all ease .3s;
+    span{
+        font-size: 16px;    
+    }
+    &:hover{
+        background-color: #fff !important;
+        color: var(--warning-color) !important;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 5px;
+    position: absolute;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.288);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(70, 70, 70, 0.7);
+    transition: all ease .3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(70, 70, 70, 1);
+    transition: all ease .3s;
+}
+
+.tabs-color-primary{
+    background-color: var(--primarytabsbackgroud-color) !important;
+}

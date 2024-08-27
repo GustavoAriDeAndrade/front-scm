@@ -1,0 +1,19 @@
+# versão do docker
+version: '3'
+# serviços
+services:
+  # serviço do sistema
+  sistema:
+    # builda a imagem do docker
+    build: 
+      context: .
+      dockerfile: dev
+    # variáveis de ambiente
+    env_file: ./.env
+    # portas em que o serviço está rodando
+    ports:
+      - '8081:8080'
+      - '8082:8080'
+    # volume disponível
+    volumes:
+      - ./src/:/var/www/src

@@ -1,0 +1,9 @@
+# utiliza o nginx
+FROM node:12.8
+# copia o build para a pasta informada
+WORKDIR /var/www
+COPY ./ /var/www
+RUN npm install
+RUN npm install --only=dev
+# inicializa o nginx
+ENTRYPOINT ["npm", "run", "serve"]
