@@ -7,26 +7,6 @@
 					<span></span>
 				</button>
 			</div>
-			<!--select que contém as empresas disponíveis para o usuário-->
-			<div class="busca row justify-end">
-				<div v-if="((company_group).find(element => element == $store.getters.user.group.key)) != undefined" class="col-12 div-input col-md-3">
-					<v-select
-						menu-props="offsetY"
-						:items="companies"
-						item-text="name" 
-						item-value="uuid"
-						v-model="company" 
-						label="Empresa(s)"
-						placeholder="Empresa(s)" 
-						background-color="white"
-						hide-details
-						solo
-						dense
-						clearable
-						@change="setCompanyHeader()"
-					/>
-				</div>
-			</div>
 			<!--conteúdos do menu da navBar-->
 			<div class="menu">
 				<ul>
@@ -60,7 +40,7 @@
 								<v-list>
 									<v-list-item>						
 									<v-list-item-content>
-										<v-list-item-title>{{$store.getters.user.name}}</v-list-item-title>
+										<v-list-item-title>{{$store.getters.user.nome}}</v-list-item-title>
 										<v-list-item-subtitle>{{$store.getters.user.email}}</v-list-item-subtitle>
 									</v-list-item-content>
 						
@@ -149,7 +129,7 @@
 								<div class="col-6 div-input">
 									<v-text-field 
 										type="password" 
-										:rules="[v => (perfil.uuid ? true : (v && v.length >= 8)) || 'Campo Nova Senha obrigatório (mínimo de 8 caracteres)']" 
+										:rules="[v => (perfil.id ? true : (v && v.length >= 8)) || 'Campo Nova Senha obrigatório (mínimo de 8 caracteres)']" 
 										v-model="perfil.senha" 
 										label="Nova Senha" 
 										placeholder="Nova Senha" 
@@ -218,18 +198,6 @@
 		// dados do componente
 		data() {
 			return {
-				// variável para os workspaces disponíveis
-				workspace_group: ['super'],
-				// variável para os grupos disponíveis
-				company_group: ['super', 'workspace-admin', 'company-admin', 'company-attendant', 'company-receptionist'],
-				// variável para as empresas
-				companies: [],
-				// variável para os workspaces
-				workspaces: [],
-				// seta o workspace com base no store
-				workspace: store.getters.workspace_uuid,
-				// seta a empresa com base no store
-				company: store.getters.company_uuid,
 				// variável para armazenar a hora
 				hora: "",
 				// variável para o menu
@@ -238,7 +206,7 @@
 				imagem_logo: Imagem,
 				// variável para editar o perfil do usuário
 				perfil: {
-					uuid: '',
+					id: '',
 					nome: '',
 					email: '',
 					senha: '',
@@ -258,20 +226,7 @@
 		// funções deste componente
 		methods: {
 			// função de início do componente
-			async init(){
-				if(((this.workspace_group).find(element => element == this.$store.getters.user.group.key)) != undefined){
-					let dados = await store.dispatch('getWorkspacesSelect')
-					this.workspaces = await dados.workspaces
-				}
-				this.setCompanyUUID()
-			},
-			// função para setar a(s) empresa(s) do usuário
-			async setCompanyUUID(){
-				// faz um dispatch para uma action no vuex para pegar as empresas do usuário
-				let dados = await store.dispatch('getCompaniesSelect')
-				// atribui os dados á variável local
-				this.companies = await dados.companies
-			},
+			async init(){},
 			// função para enviar um perfil
 			async enviarPerfil(){
 				let resp = {}
@@ -280,7 +235,7 @@
 					// coloca o componente como loading
 					this.loading = true
 					// coleta os dados do usuário
-					let dados = await {
+					let dados = {
 						// coleta o nome do usuário
 						name: this.perfil.nome,
 						// coleta o email do usuário
@@ -290,37 +245,37 @@
 						// coleta a senha do usuário
 						password_confirmation: this.perfil.repete_senha,
 						// coleta o grupo do usuário
-						group: this.$store.getters.user.group_uuid,
+						group: this.$store.getters.user.group_id,
 						// coleta o status do usuário
 						status: true,
 					}
 					// armazena os dados para realizar a atualização
-					let date_update = await {
+					let date_update = {
 						dados_usuario: dados,
-						uuid: this.perfil.uuid,
+						id: this.perfil.id,
 					}
 					// rota para a atualização do perfil
 					resp = await store.dispatch('putProfile', date_update)
 					// caso algo tenha dado errado
 					if(resp.status != 200 && resp.status != 201){
 						// atribui o título da mensagem 
-						this.resposta.titulo = await 'Algo deu errado!'
+						this.resposta.titulo = 'Algo deu errado!'
 						// atribui o corpo da mensagem 
 						this.resposta.mensagem = await  resp.data.message || resp.data.error
 						// mostra a mensagem
 						this.dialog_resposta = true
 					}else{
 						// atribui o título da mensagem 
-						this.resposta.titulo = await  'Perfil editado!'
+						this.resposta.titulo = 'Perfil editado!'
 						// atribui o corpo da mensagem 
-						this.resposta.mensagem = await 'Perfil editado com sucesso!'
+						this.resposta.mensagem = 'Perfil editado com sucesso!'
 						// fecha a modal de edição do perfil
 						this.closePerfil()
 						// mostra a mensagem
 						this.dialog_resposta = true
 					}
 					// seta as novas informações do usuário
-					await store.dispatch('setUserUUID')
+					await store.dispatch('setUserID')
 					// retira o loading do componente
 					this.loading = false
 				}
@@ -328,17 +283,17 @@
 			// função para abrir a modal de edição de perfil
 			async editarPerfil(){
 				// abre a modal de edição do usuário
-				this.dialog_perfil= await true
+				this.dialog_perfil= true
 				// coloca o componente como loading
-				this.loading = await true
-				// atribui o uuid do usuário a partir do store
-				this.perfil.uuid = this.$store.getters.user.uuid,
+				this.loading = true
+				// atribui o id do usuário a partir do store
+				this.perfil.id = this.$store.getters.user.id,
 				// atribui o nome do usuário a partir do store
-				this.perfil.nome = this.$store.getters.user.name,
+				this.perfil.nome = this.$store.getters.user.nome,
 				// atribui o email do usuário a partir do store
 				this.perfil.email = this.$store.getters.user.email,
 				// retira o loading do componente
-				this.loading = await false
+				this.loading = false
 			},
 			// função que roda quando é fechada a modal de edição de perfil
 			async closePerfil(){
@@ -346,24 +301,12 @@
 				this.dialog_perfil = false
 				// limpa os dados locais do usuário
 				this.perfil = {
-					uuid: '',
+					id: '',
 					nome: '',
 					email: '',
 					senha: '',
 					repete_senha: ''
 				}
-			},
-			// função para encontrar as empresas com base no workspace
-			async changeCompanyByWorkspace(){
-				// faz um dispacth parauma action no vuex store para pegar uma empresa passando o workspace
-				await store.dispatch('setWorkspaceUuid', this.workspace)
-				// seta as empresas
-				this.setCompanyUUID()
-			},	
-			// seta as empresas da navBar
-			async setCompanyHeader(){
-				// faz um dispacth para uma action no vuex store para pegar as empresas
-				await store.dispatch('setCompanyUuid', this.company)
 			},
 			// função para ativação do menu	
 			activeMenu() {
@@ -391,7 +334,7 @@
 <style lang="scss">
 	#nav-bar{
 		color: #f4f6fa ;
-		background-color: var(--primary-color);
+		background-color: rgba(173, 95, 166, 0.8);
 		.nav-bar-row{
 			display: flex;
 			align-items: center;
@@ -549,7 +492,7 @@
 										border-radius: 5px 0;
 									}
 									a{
-										color:  var(--primary-color);
+										color:  rgba(173, 95, 166, 0.8);
 									}
 								}
 							}

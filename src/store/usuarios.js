@@ -43,7 +43,7 @@ export default {
 					// url da rota do back para fazer a requisição
 					'/user' + 
 					// por qual coluna devem ser ordenados os registros
-					(filters.order_column ? ('?orderBy=' + filters.order_column) : '?orderBy=uuid') +
+					(filters.order_column ? ('?orderBy=' + filters.order_column) : '?orderBy=id') +
 					// qual a ordem que deve ser ordenado (ASC ou DESC)
 					(filters.order_dir ? '&order=' + filters.order_dir : '&order=asc') +
 					// qual a quantidade de dados
@@ -63,7 +63,6 @@ export default {
 				// retorna a resposta da requisição
 				return data
 		},
-
 		/**
 		 * função para coletar apenas 1 usuário do back
 		 * @param {*} param0 
@@ -103,58 +102,12 @@ export default {
 			// seta o status do store de usuarios para loading
 			await commit('SET_STATUS', 'loading')
 			// faz uma requisição para o back e coleta o resultado na variavel resp
-			const resp = await API.put('/user/'+date_update.uuid, date_update.dados_usuario)
+			const resp = await API.put('/user/'+date_update.id, date_update.dados_usuario)
 			// seta o status do store de usuario para vazio 
 			await commit('SET_STATUS', '')
 			// retorna a resposta da requisição
 			return resp
 		},
-        /**
-         * função para coletar os dados passando o uuid
-         * @param {*} param0
-         * @param {*} usuario_uuid
-         */
-		async getEspecialidade({ commit }, usuario_uuid) {
-            // seta o status do store de funcionário para loading
-            await commit ('SET_STATUS', 'loading')
-            // faz uma requisição para o back e coleta o resultado na variável resp
-            const resp = await API.get('/usersProcedure/' + usuario_uuid)
-            // seta o status do store de usuario para vazio
-            await commit('SET_STATUS', '')
-            // retorna a resposta da requisição
-            return resp
-        },        
-		/**
-		* função para adicionar às especialidades de um funcionário
-		* @param {*} param0
-		* @param {*} dados_especialidades
-		*/
-	   	async postEspecialidade({ commit }, dados_especialidades) {
-		   // seta o status do store de funcionario para loading
-		   await commit('SET_STATUS', 'loading')
-		   // faz uma requisição para o back e coleta o resultado na variavel resp
-		   const resp = await API.post('/usersProcedure', dados_especialidades)
-		   // seta o status do store de funcionário para vazio
-		   await commit('SET_STATUS', '')
-		   // retorna a resposta da requisição
-		   return resp
-	   },
-	   /**
-		* função para atualizar a especialidade do usuário
-		* @param {*} param0 
-		* @param {*} date_update 
-		* @returns 
-		*/
-	    async putEspecialidade({ commit }, date_update) {
-		   // seta o status do store para loading
-		   await commit('SET_STATUS', 'loading')
-		   // faz uma requisição para o back e coleta o resultado na variavel resp
-		   const resp = await API.put('/usersProcedure/' + date_update.uuid, date_update.dados_especialidades)
-		   // seta o status do store de usuario para vazio
-		   await commit('SET_STATUS', '')
-		   // retorna a resposta da requisição
-		   return resp
-	   },
 		/**
 		* função para coletar os grupos
 		* @param {*} param0
@@ -169,28 +122,6 @@ export default {
 			// retorna a resposta da requisição
 			return resp
 		},
-
-		/**
-		 * função para salvar os dados de seção do usuário
-		 * @param {*} param0
-		 * @param {*} dados_usuario
-		 */
-		async postUsuarioIdOneSignal({ commit }, dados_usuario){
-			console.log('JS', dados_usuario)
-			// seta o status do store de usuários para loading
-			await commit('SET_STATUS', 'loading')
-			// faz uma requisição para o back e coleta o resultado na variãvel resp
-			const resp = await API.post(
-				// url da rota do back para fazer a requisição
-				'/device',
-				// corpo da requisição
-				dados_usuario
-			)
-			// seta o status do store de usuário para vazio
-			await commit('SET_STATUS', '')
-			// retorna a resposta da requisição
-			return resp
-		}
 	},
 	// funções para coletar o estado do store de usuários
 	getters: {

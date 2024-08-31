@@ -48,16 +48,10 @@
 			resposta: {},
 			all_menus: [
 				{
-					link: '/empresas',
-					name: 'Empresas',
-					icon: 'fas fa-city',
-					group: ['super', 'workspace-admin'],
-				},
-				{
 					link: '/usuarios',
 					name: 'Usuários',
 					icon: 'fas fa-users',
-					group: ['super', 'workspace-admin', 'company-admin'],
+					group: ['admin'],
 				},
 				{
 					link: '/procedimentos',
@@ -66,28 +60,10 @@
 					group: ['company-admin'],
 				},
 				{
-					link: '/funcionarios',
-					name: 'Funcionários',
-					icon: 'fas fa-user-tie',
-					group: ['company-admin', 'company-attendant'],
-				},
-				{
-					link:'/agendas',
-					name: 'Integração Whats',
-					icon: 'fa fa-address-book',
-					group: ['company-admin'],
-				},
-				{
 					link: '/relatorios',
 					name: 'Relatórios',
 					icon: 'fas fa-chart-bar',
 					group: ['company-admin']
-				},
-				{
-					link:'/calendarios',
-					name: 'Calendário',
-					icon: 'fa fa-calendar',
-					group: ['company-admin', 'company-attendant', 'company-receptionist'],
 				}
 			],
 			respective_menus: [],
@@ -98,7 +74,7 @@
 			},
 			isThisGroup(menu){
 				if(menu.group.length > 0){
-					let response = (menu.group).find(element => element == store.getters.user.group.key)
+					let response = (menu.group).find(element => element == store.getters.user.group.chave)
 					return response != undefined
 				}
 				return true
@@ -149,7 +125,7 @@
 				a{
 					padding: 15px 30px;
 					display: flex;
-					color: #0c0c0c;
+					color: rgba(173, 95, 166, 0.8);
 					transition: all ease .3s;
 					align-items: center;
 					.icone{
@@ -167,7 +143,8 @@
 					}
 					&.active,
 					&:hover{
-						background-color: var(--info-color);
+						color: #fffefe;
+						background-color: rgba(173, 95, 166, 0.8);
 					}
 				}
 			}
@@ -245,7 +222,7 @@
 							.texto{
 								transform: translateX(100%);
 								opacity: 1;
-								color: var(--primary-color);
+								color: rgba(173, 95, 166, 0.8);
 							}
 						}
 					}

@@ -1,18 +1,12 @@
 <template>
 	<figure id="logo">
-		<img class="img-responsive" alt="Logo" :src="$store.getters.theme.logo">
+		<img class="img-responsive" alt="Logo" :src="'./images/login.jpeg'">
 	</figure>
 </template>
 
 <script>
-	import store from '@/store'
 	export default {
 		name: 'Logo',
-		data() {
-			return {
-				theme:store.theme
-			}
-		},
 	}
 </script>
 

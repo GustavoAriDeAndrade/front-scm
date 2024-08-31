@@ -5,34 +5,58 @@ import API from '../plugins/api'
 
 Vue.use(VueRouter)
 
-function verificaLogin(to, from, next) {
-	if (store.getters.isLoggedIn) {
-		store.dispatch('setUserUUID').then(function () {
-			if (store.getters.user_uuid) {
+/**
+ * Função para verificar se o usuário já logou
+ * @param {*} to 
+ * @param {*} from 
+ * @param {*} next 
+ */
+function verificaLogin(to, from, next){
+
+	if(store.getters.isLoggedIn){
+
+		store.dispatch('setUserID').then(function (){
+
+			if(store.getters.user_id){
 				next()
 				return
-			} else {
+			}else{
 				next('/login')
 			}
 		})
-	} else {
+	}else{
 		next('/login')
 	}
 }
 
-async function verificaGroup(to, from, next, requisito) {
-	if (store.getters.isLoggedIn) {
+/**
+ * Função para verificar se o usuário tem permissão para acessar a página
+ * @param {*} to 
+ * @param {*} from 
+ * @param {*} next 
+ * @param {*} requisito 
+ */
+async function verificaGroup(to, from, next, requisito){
+
+	if(store.getters.isLoggedIn){
+
 		const { data, status } = await API.get('group?orderBy=created_at&order=asc&_embed=true')
+
 		if(status == 200){
-			if(((data.user_groups).find(element => element.hierarchy_order <= requisito)) == undefined){
+
+			if(((data.user_groups).find(element => element.hierarquia <= requisito)) == undefined){
+
 				next('/sem-permissao')
+
 			}else{
+
 				next()
+
 			}
 		}else{
 			next('/')
 		}
-	} else {
+	}else{
 		next('/login')
 	}
 }
@@ -74,17 +98,9 @@ const routes = [
 				path: '/usuarios',
 				name: 'Usuários',
 				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 4)
+					verificaGroup(to, from, next, 1)
 				},
 				component: () => import('@/views/pages/Usuarios.vue'),
-			},
-			{
-				path: '/empresas',
-				name: 'Empresas',
-				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 2)
-				},
-				component: () => import('@/views/pages/Empresas.vue'),
 			},
 			{
 				path: '/procedimentos',
@@ -101,30 +117,6 @@ const routes = [
 					verificaGroup(to, from, next, 4)
 				},
 				component: () => import('@/views/pages/Relatorios.vue')
-			},
-			{
-				path: '/funcionarios',
-				name: 'Funcionários',
-				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 4)
-				},
-				component: () => import('@/views/pages/Funcionarios.vue')
-			},
-			{
-				path: '/agendas',
-				name: 'Agendas',
-				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 4)
-				},
-				component: () => import('@/views/pages/Agendas.vue')
-			},
-			{
-				path: '/calendarios',
-				name: 'Calendários',
-				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 5)
-				},
-				component: () => import('@/views/pages/Calendarios.vue')
 			},
 			{
 				path: '/sem-permissao',
@@ -145,22 +137,6 @@ const routes = [
 		component: () => import('@/views/login/Login.vue'),
 		beforeEnter(to, from, next) {
 			notLogin(to, from, next)
-		}
-	},
-	{
-		path: '/recuperar-senha',
-		name: 'Esqueci minha senha',
-		component: () => import('@/views/login/RecuperarSenha.vue'),
-		beforeEnter(to, from, next) {
-			notLogin(to, from, next)
-		}
-	},
-	{
-		path: '/nova-senha',
-		name: 'Nova senha',
-		component: () => import('@/views/login/NovaSenha.vue'),
-		beforeEnter(to, from, next) {
-			notLoginRecover(to, from, next)
 		}
 	},
 	{

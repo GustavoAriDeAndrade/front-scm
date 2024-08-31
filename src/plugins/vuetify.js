@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import store from '@/store'
 
 Vue.use(Vuetify)
 
@@ -9,13 +8,13 @@ const opts = {
     theme: {
         themes: {
             light: {
-                primary: store.getters.theme.light.primary,
-                secondary: store.getters.theme.light.secondary,
-                accent: store.getters.theme.light.accent,
-                error: store.getters.theme.light.error,
-                info: store.getters.theme.light.info,
-                success: store.getters.theme.light.success,
-                warning: store.getters.theme.light.warning,
+                primary: '#888a8c',
+                secondary: '#a5a4a4',
+                accent: '#ff8304',
+                error: '#ff4545',
+                info: '#ff8304',
+                success: '#44ad48',
+                warning: '#ff8304',
             },
         },
     },

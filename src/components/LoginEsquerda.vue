@@ -1,18 +1,12 @@
 <template>
 	<figure id="background-esquerda">
-		<img class="img-login" alt="Imagem" :src="$store.getters.theme.logo_esquerda">
+		<img class="img-login" alt="Imagem" :src="'./img/login.jpg'">
 	</figure>
 </template>
 
 <script>
-	import store from '@/store'
 	export default {
-		name: 'LoginEsquerda',
-		data() {
-			return {
-				theme:store.theme
-			}
-		},
+		name: 'LoginEsquerda'
 	}
 </script>
 

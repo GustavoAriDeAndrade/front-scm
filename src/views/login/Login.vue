@@ -8,7 +8,7 @@
 				<div class="row">
 					<div class="col-12">
 						<h2>
-							<span>Olá! Seja bem-vindo a {{$store.getters.theme.name}}</span>
+							<span>Olá! Seja bem-vindo ao SCM</span>
 						</h2>
 					</div>
 				</div>
@@ -39,17 +39,6 @@
 						<v-btn @click="handleSubmit" block elevation="2" large color="primary" :loading="loading" >
 							Entrar
 						</v-btn>
-					</div>
-				</div>
-				<div class="row row-opcoes">
-					<div class="col-12 lembrar-usuario">
-						<v-checkbox v-model="inputs.lembrar_usuario" label="Lembrar Usuário"/>
-					</div>
-					<div class="col-12 criar-conta">
-						Novo por aqui? <router-link to="/recuperar-senha">Crie uma conta!</router-link>
-					</div>
-					<div class="col-12 recuperar-senha">
-						<router-link to="/recuperar-senha">Esqueceu a senha?</router-link>
 					</div>
 				</div>
 			</v-form>
@@ -90,7 +79,7 @@
 				inputs: {
 					usuario: localStorage.getItem('usuario') || '',
 					senha: localStorage.getItem('senha') || '',
-					lembrar_usuario: localStorage.getItem('lembrar_usuario') || '',
+					lembrar_usuario: '',
 				},
 			}
 		},
@@ -202,7 +191,7 @@
 					font-weight: 300;
 					font-size: 18px;
 					line-height: 36px;
-					color: var(--secondary-color);
+					color: rgba(48, 48, 48, 0.8);
 					text-align: center;
 					span{
 						font-weight: 600;
@@ -218,14 +207,14 @@
 					border-radius: 12px;
 				}				
 				input{
-					color: var(--secondary-color);
+					color: rgba(48, 48, 48, 0.8);
 				}
 				.btn-entrar{
 					padding: 0;
 					button{
-						background: radial-gradient(50% 50% at 50% 50%, var(--primary-color) 45%, var(--accent-color) 100%);
+						background: radial-gradient(50% 50% at 50% 50%, rgba(173, 95, 166, 0.8) 45%, rgba(212, 97, 203, 0.8) 100%);
 						color: #fff;
-						box-shadow: -4px -4px 12px rgba(253, 255, 255, 0.8), 4px 4px 12px rgba(187, 195, 206, 0.6);
+						box-shadow: -4px -4px 12px rgba(173, 95, 166, 0.8), 4px 4px 12px rgba(187, 195, 206, 0.6);
 						width: 100%;
 						border-radius: 12px;
 						transition: all ease .3s;
@@ -233,60 +222,6 @@
 							text-transform: capitalize;
 							font-size: 18px;
 							font-weight: 600;
-						}
-					}
-				}
-				.row-opcoes{
-					display: flex;
-					flex-wrap: wrap;
-					justify-content: center;
-					align-items: center;
-					text-align: center;
-					.lembrar-usuario{
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						padding: 0 15px;
-						label{
-							display: flex;
-							align-items: center;
-							margin-bottom: 0;
-							font-size: 14px;
-							p{
-								padding: 0px;
-								font-style: normal;
-								font-weight: normal;
-								font-size: 14px;
-								line-height: 17px;
-								color: #373737;
-							}
-							input{
-								width: auto;
-								margin-right: 10px;
-							}
-						}
-					}
-					.criar-conta{
-						padding: 0 15px;
-						color: rgba(0,0,0,.6);
-						font-size: 14px;
-						a{
-							color: rgba(0, 0, 0, 0.6);
-							font-weight: 600;
-						}
-					}
-					.recuperar-senha{
-						padding: 5px 15px 20px 15px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						a{
-							text-align: right;
-							font-style: normal;
-							font-weight: normal;
-							font-size: 14px;
-							line-height: 20px;
-							color: rgba(0,0,0,.6);
 						}
 					}
 				}

@@ -222,7 +222,7 @@
 			.btn-opcoes-headers{
 				position: relative;
 				.btn-only-icon{
-					background-color: var(--primary-color)!important;
+					background-color: rgba(212, 97, 203, 0.8) !important;
 				}
 				.sub-menu-headers{
 					min-width: 310px;
@@ -237,7 +237,7 @@
 					flex-direction: column;
 					z-index: 1;
 					.btn-exportar{
-						background-color: var(--primary-color);
+						background-color: rgba(212, 97, 203, 0.8);
 					}
 					.span-titulo-submenu{
 						text-align: center;
