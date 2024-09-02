@@ -5,8 +5,9 @@ import config from "@/store/config.js"
 import login from "@/store/login.js"
 import usuarios from "@/store/usuarios.js"
 import application from "@/store/application.js"
-import procedimentos from "@/store/procedimentos.js"
+import produtos from "@/store/produtos.js"
 import relatorios from '@/store/relatorios'
+import clientes from '@/store/clientes'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
 		login,
 		usuarios,
 		application,
-		procedimentos,
+		produtos,
 		relatorios,
+		clientes,
 	},
 })

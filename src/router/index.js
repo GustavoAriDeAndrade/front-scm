@@ -103,12 +103,20 @@ const routes = [
 				component: () => import('@/views/pages/Usuarios.vue'),
 			},
 			{
-				path: '/procedimentos',
-				name: 'Procedimentos',
+				path: '/clientes',
+				name: 'Clientes',
 				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 3)
+					verificaGroup(to, from, next, 2)
 				},
-				component: () => import('@/views/pages/Procedimentos.vue')
+				component: () => import('@/views/pages/Clientes.vue'),
+			},
+			{
+				path: '/produtos',
+				name: 'Produtos',
+				beforeEnter(to, from, next) {
+					verificaGroup(to, from, next, 2)
+				},
+				component: () => import('@/views/pages/Produtos.vue')
 			},
 			{
 				path: '/relatorios',
