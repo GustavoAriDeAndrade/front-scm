@@ -127,6 +127,14 @@ const routes = [
 				component: () => import('@/views/pages/Relatorios.vue')
 			},
 			{
+				path: '/inicial',
+				name: 'Inicial',
+				beforeEnter(to, from, next) {
+					verificaGroup(to, from, next, 2)
+				},
+				component: () => import('@/views/pages/Inicial.vue')
+			},
+			{
 				path: '/sem-permissao',
 				name: 'Sem Permissão',
 				component: () => import('@/views/pages/SemPermissao.vue'),
