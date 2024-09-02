@@ -268,7 +268,7 @@
 					// caso exista um usuario_id 
 					if(this.usuario.usuario_id){
 						// coleta o status do usuário
-						dados.ativo = await this.usuario.ativo == 'Ativo' ? true : false
+						dados.ativo = this.usuario.ativo == 'Ativo' ? true : false
 						// armazena os dados para realizar a atualização
 						let date_update = {
 							dados_usuario: dados,

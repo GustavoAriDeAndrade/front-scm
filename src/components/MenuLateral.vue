@@ -54,10 +54,16 @@
 					group: ['admin'],
 				},
 				{
-					link: '/procedimentos',
-					name: 'Procedimentos',
+					link: '/clientes',
+					name: 'Clientes',
+					icon: 'fas fa-user-friends',
+					group: ['admin', 'caixa'],
+				},
+				{
+					link: '/produtos',
+					name: 'Produtos',
 					icon: 'far fa-list-alt',
-					group: ['company-admin'],
+					group: ['admin', 'caixa'],
 				},
 				{
 					link: '/relatorios',

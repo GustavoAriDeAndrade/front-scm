@@ -1,94 +1,89 @@
 <template>
-    <div id="procedimentos">
-        <div class="tabela-procedimentos">
+    <div id="produtos">
+        <div class="tabela-produtos">
             <!-- botão para abrir a modal-->
-            <div class="col-12 novo-procedimento">
-                <v-btn class="primary-button" raised @click="createProcedimento">
+            <div class="col-12 novo-produto">
+                <v-btn class="primary-button" raised @click="createProduto">
                     <i class="fas fa-list-ol"></i>
                     <i class="fas fa-plus"></i>
-                    Cadastrar Procedimento
+                    Cadastrar Produto
                 </v-btn>
             </div>
-            <!-- tabela que ira conter os procedimentos de cada empresa-->
+            <!-- tabela que ira conter os produtos cadastrados -->
             <CustomTable
                 v-if="headers != ''"
-                :action="'getProcedimentos'"
-                :getter="$store.getters.procedimentos"
+                :action="'getProdutos'"
+                :getter="$store.getters.produtos"
                 :headers="headers"
                 :search="true"
-                :title="'Procedimentos'"
+                :title="'Produtos'"
                 :icone="'far fa-list-alt'"
                 :pagination="true"
                 :filters="filtros"
                 ref="tabela"
             >
+				<template v-slot:ativo="{ item }">
+					<span v-if="item.ativo">
+						Ativo
+						<img src="./../../assets/images/icon-ativo.png">
+					</span>
+					<span v-else>
+						Inativo
+						<img src="./../../assets/images/icon-inativo.png">
+					</span>
+				</template>
+				<!-- botões para ativação das modais presentes na tabela -->
                 <template v-slot:acoes="{ item }">
-                    <v-btn class="primary-button" raised small @click="editarProcedimento(item.uuid)">
+                    <v-btn class="primary-button" raised small @click="editarProduto(item.id)">
                         <i class="fas fa-cog"></i>
                         Editar
                     </v-btn>
                 </template>
             </CustomTable>
-            <!-- modal para cadastro e edição de um procedimento-->
-            <v-dialog v-model="dialog_procedimento" persistent max-width="550px">
+            <!-- modal para cadastro e edição de um produto-->
+            <v-dialog v-model="dialog_produto" persistent max-width="550px">
                 <v-card>
                     <v-card-title>
-                        <span v-if="procedimento.procedimento_uuid" class="headline"> <img src="./../../assets/images/icone-nova-empresa.png"> Editar Procedimentos</span>
-                        <span v-else class="headline"><img src="./../../assets/images/icone-nova-empresa.png"> Novo Procedimento</span>
+                        <span v-if="produto.produto_id" class="headline">Editar Produtos <v-icon>fa-user-edit</v-icon> </span>
+                        <span v-else class="headline"><v-icon style="margin-right: 10px;">fa-user-plus</v-icon> Novo Produto</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            <v-form ref="form_procedimento">
+                            <v-form ref="form_produto">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 div-input">
                                         <v-text-field
-                                            :rules="[v => !!v || 'Campo Procedimento Obrigatório']"
-                                            v-model="procedimento.nome"
-                                            label="Procedimento"
-                                            placeholder="Procedimento"
+                                            :rules="[v => !!v || 'Campo Produto Obrigatório']"
+                                            v-model="produto.nome"
+                                            label="Produto"
+                                            placeholder="Produto"
                                             background-color="white"
                                             hide-details
                                             outlined
                                         />
                                     </div>
-									<div class="col-12">
-										<v-select
-											:rules="[v => !!v || 'Campo Empresa obrigatório']"
-											:items="$store.getters.companies"
-											item-text="name" 
-											item-value="uuid"
-											v-model="procedimento.empresa" 
-											label="Empresa(s)"
-											placeholder="Empresa(s)" 
+									<div v-if="produto.produto_id"  class="col-12 div-input">
+										<v-select 
+											:rules="[v => !!v || 'Campo Status obrigatório']" 
+											:items="['Ativo', 'Inativo']" 
+											v-model="produto.ativo" 
+											label="Status" 
+											placeholder="Status" 
 											background-color="white"
 											hide-details
 											outlined
 										/>
 									</div>
-                                    <div class="col-12">
-                                        <v-text-field
-                                            v-mask="'###'"
-                                            type="text"
-                                            :rules="[v => !!v || 'Campo Duração Obrigatório']"
-                                            v-model="procedimento.duracao"
-                                            label="Duração"
-                                            placeholder="Duração(min.)"
-                                            suffix="Min"
-                                            background-color="white"
-                                            hide-details
-                                            outlined
-                                        />
-                                    </div>
                                 </div>
                             </v-form>
                         </v-container>
                     </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="darken-1" text style="text-transform: capitalize; font-size: 16px;" @click="closeProcedimento">
+                    <v-btn color="darken-1" text style="text-transform: capitalize; font-size: 16px;" @click="closeProduto">
                         Cancelar
                     </v-btn>
-                    <v-btn class="primary-button" small @click="enviarProcedimento">
+                    <v-btn class="primary-button" small @click="enviarProduto">
                         Salvar
                     </v-btn>
                 </v-card-actions>
@@ -113,7 +108,7 @@
     // exporta o componente
     export default {
         // nome do componente
-        name: 'Procedimentos',
+        name: 'Produtos',
         // componentes filhos
         components: {
             // componente de DialogMensagem
@@ -124,36 +119,30 @@
             Loader,
         },
     data: () => ({
-        // variável para mostrar a modal para edita/criar um procedimento
-        dialog_procedimento: false,
+        // variável para mostrar a modal para edita/criar um produto
+        dialog_produto: false,
         // variável para mostrar a modal de informação
         dialog_resposta: false,
         // variável para a mensagem de resposta
         resposta: {},
         // variável para o componente de loading
         loading: false,
-        // variáveis para criar/editar um procedimento
-        procedimento: {
-            procedimento_uuid: '',
+        // variáveis para criar/editar um produto
+        produto: {
+            produto_id: '',
             nome: '',
-            duracao: '',
-            empresa: '',
+            ativo: '',
         },
         // variável para o cabeçalho da tabela
         headers: [
             {
-                value: 'name',
-                text: 'Procedimento',
+                value: 'nome',
+                text: 'Produto',
                 sortable: true,
             },
             {
-                value: 'duration',
-                text: 'Duração(min)',
-                sortable: true,
-            },
-            {
-                value: 'companies.name',
-                text: 'Empresa',
+                value: 'ativo',
+                text: 'Status',
                 sortable: true,
             },
             {
@@ -169,39 +158,39 @@
     }),
     // funções deste componente
     methods: {
-        // função para abrir a modal de cadastro/edição de procedimento
-        async createProcedimento(){
-            // abre a modal de procedimentos
-            this.dialog_procedimento = true
+        // função para abrir a modal de cadastro/edição de produto
+        async createProduto(){
+            // abre a modal de produtos
+            this.dialog_produto = true
         },
-        // função para enviar um procedimento
-        async enviarProcedimento(){
+        // função para enviar um produto
+        async enviarProduto(){
             let resp = {}
             // caso os campos do formulário estejam válidos
-            if (this.$refs.form_procedimento.validate()){
+            if (this.$refs.form_produto.validate()){
                 // coloca o componente como loading
                 this.loading =  true
-                // coleta os dados do procedimento
-                let dados = await {
-                    // coleta o nome do procedimento
-                    name: this.procedimento.nome,
-                    // coleta a duração do procedimento
-                    duration: this.procedimento.duracao.toString(),
-                    // coleta a empresa do procedimento
-                    company: this.procedimento.empresa,
+                // coleta os dados do produto
+                let dados = {
+                    // coleta o nome do produto
+                    nome: this.produto.nome,
                 }
-                // caso ja exista um procedimento_uuid
-                if(this.procedimento.procedimento_uuid){
+                // caso ja exista um produto_id
+                if(this.produto.produto_id){
+                    // coleta o status do produto
+                    dados.ativo = this.produto.ativo == 'Ativo' ? true : false
                     // armazena os dados para realizar a atualização
-                    let date_update = await {
-                        dados_procedimento: dados,
-                        uuid: this.procedimento.procedimento_uuid
+                    let date_update = {
+                        dados_produto: dados,
+                        id: this.produto.produto_id
                     }
-                    // rota para a atualização do procedimento
-                    resp = await store.dispatch('putProcedimento', date_update)
+                    // rota para a atualização do produto
+                    resp = await store.dispatch('putProduto', date_update)
                 }else{
-                    // rota para a criação do procedimento
-                    resp = await store.dispatch('postProcedimento', dados)
+                    // coleta o status do produto
+                    dados.ativo = true
+                    // rota para a criação do produto
+                    resp = await store.dispatch('postProduto', dados)
                 }
                 // caso algo tenha dado errado
                 if(resp.status != 200 && resp.status != 201){
@@ -213,11 +202,11 @@
                     this.dialog_resposta = true
                 }else{
                     // atribui o título da mensagem
-                    this.resposta.titulo = 'Procedimento ' + (this.procedimento.procedimento_uuid ? 'editado!' : 'cadastrado!')
+                    this.resposta.titulo = 'Produto ' + (this.produto.produto_id ? 'editado!' : 'cadastrado!')
                     // atribui o corpo da mensagem
-                    this.resposta.mensagem = 'Procedimento ' + (this.procedimento.procedimento_uuid ? 'editado' : 'cadastrado') + ' com sucesso!'
-                    // fecha a modal de create/edit procedimento
-                    this.closeProcedimento()
+                    this.resposta.mensagem = 'Produto ' + (this.produto.produto_id ? 'editado' : 'cadastrado') + ' com sucesso!'
+                    // fecha a modal de create/edit produto
+                    this.closeProduto()
                     // mostra a mensagem
                     this.dialog_resposta = true
                 }
@@ -227,24 +216,23 @@
                 this.$refs.tabela.init()
             }
         },
-        // função para coletar um procedimento para editar
-        async editarProcedimento(procedimento_uuid){
+        // função para coletar um produto para editar
+        async editarProduto(produto_id){
             // coloca o componente como loading
             this.loading = true
-            // faz um dispatch para uma action no vuex store para pegar um procedimento passando o uuid
-            var resp = await store.dispatch('getProcedimento', procedimento_uuid)
+            // faz um dispatch para uma action no vuex store para pegar um produto passando o id
+            var resp = await store.dispatch('getProduto', produto_id)
             // caso o status da resposta seja 200 (deu certo)
             if(resp.status == 200){
-                // atribui os dados do procedimento vindos do back à váriável local
-                this.procedimento.procedimento_uuid = await resp.data.uuid || ''
-                this.procedimento.nome = await resp.data.name || ''
-                this.procedimento.duracao = await resp.data.duration || ''
-                this.procedimento.empresa = await resp.data.companies.uuid || ''
-                // mostra a modal de criar/editar o procedimento
-                this.createProcedimento()
+                // atribui os dados do produto vindos do back à váriável local
+                this.produto.produto_id = await resp.data.product.id || ''
+                this.produto.nome = await resp.data.product.nome || ''
+				this.produto.ativo = await resp.data.product.ativo ? 'Ativo' : 'Inativo'
+                // mostra a modal de criar/editar o produto
+                this.createProduto()
             }else{
                 // atribui o título da mensagem
-                this.resposta.titulo = await 'Algo deu errado!'
+                this.resposta.titulo = 'Algo deu errado!'
                 // atribui o corpo da mensagem
                 this.resposta.mensagem = await resp.data.message || resp.data.error
                 // mostra a mensagem
@@ -255,16 +243,15 @@
             // atualiza a tabela
             this.$refs.tabela.init()
         },
-        // função que roda quando é fechada a modal de criar/editar o procedimento
-        closeProcedimento(){
+        // função que roda quando é fechada a modal de criar/editar o produto
+        closeProduto(){
             // fecha a modal
-            this.dialog_procedimento = false
-            // limpa os dados locais do procedimento
-            this.procedimento = {
-                procedimento_uuid: '',
+            this.dialog_produto = false
+            // limpa os dados locais do produto
+            this.produto = {
+                produto_id: '',
                 nome: '',
-                duracao: '',
-                empresa: '',
+                ativo: '',
             }
         },
     }
@@ -272,16 +259,16 @@
 </script>
 
 <style lang="scss">
-    #procedimentos{
+    #produtos{
         display: flex;
         max-height: 100%;
         padding: 24px;
         flex-wrap: wrap;
-        .tabela-procedimentos{
+        .tabela-produtos{
             width: 100%;
             background-color: #fff;
             border-radius: 10px;
-            .novo-procedimento{
+            .novo-produto{
                 display: flex;
                 justify-content: flex-end;
                 padding-bottom: 0;

@@ -66,13 +66,13 @@ export default {
 		/**
 		 * função para coletar apenas 1 usuário do back
 		 * @param {*} param0 
-		 * @param {*} usuario_uuid 
+		 * @param {*} usuario_id 
 		 */
-		async getUsuario({ commit }, usuario_uuid) {
+		async getUsuario({ commit }, usuario_id) {
 			// seta o status do store de usuarios para loading
 			await commit('SET_STATUS', 'loading')
 			// faz uma requisição para o back e coleta o resultado na variavel resp
-			const resp = await API.get('/user/' + usuario_uuid)
+			const resp = await API.get('/user/' + usuario_id)
 			// seta o status do store de usuario para vazio 
 			await commit('SET_STATUS', '')
 			// retorna a resposta da requisição
@@ -102,7 +102,7 @@ export default {
 			// seta o status do store de usuarios para loading
 			await commit('SET_STATUS', 'loading')
 			// faz uma requisição para o back e coleta o resultado na variavel resp
-			const resp = await API.put('/user/'+date_update.id, date_update.dados_usuario)
+			const resp = await API.put('/user/' + date_update.id, date_update.dados_usuario)
 			// seta o status do store de usuario para vazio 
 			await commit('SET_STATUS', '')
 			// retorna a resposta da requisição
