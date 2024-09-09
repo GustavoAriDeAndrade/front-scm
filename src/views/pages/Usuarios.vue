@@ -363,6 +363,10 @@
 		max-height: 100%;
 		padding: 24px;
 		flex-wrap: wrap;
+		background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+		background-size: cover;
+		min-height: 100vh;
+		
 		.tabela-usuario{
             width: 100%;
 			background-color: #fff;

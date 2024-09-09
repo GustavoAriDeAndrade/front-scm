@@ -34,6 +34,9 @@
 			NavBar,
 		},
 		methods: {
+			async init() {
+            	this.$router.push('/inicial')
+			},
 			minimize() {
 				store.dispatch('toggleMenu')
 			},
@@ -71,6 +74,7 @@
 					store.dispatch('postUsuarioIdOneSignal',{device:{deviceToken:userId, device_type: 'one-signal'}})
 				});
 			}); 
+      		this.init()
 		}
 	}
 
@@ -136,7 +140,7 @@
 						}
 					}
 					&.open{
-						width: 300px;
+						width: 260px;
 						.btn-minimize{
 							transform: rotate(0deg);
 						}

@@ -83,6 +83,7 @@
                     <v-btn color="darken-1" text style="text-transform: capitalize; font-size: 16px;" @click="closeProduto">
                         Cancelar
                     </v-btn>
+                    <!-- Click = chama a função atribuida -->
                     <v-btn class="primary-button" small @click="enviarProduto">
                         Salvar
                     </v-btn>

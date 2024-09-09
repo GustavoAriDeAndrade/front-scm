@@ -48,6 +48,12 @@
 			resposta: {},
 			all_menus: [
 				{
+					link: '/dashboard',
+					name: 'Dashboard',
+					icon: 'far fa-list-alt',
+					group: ['admin', 'caixa'],
+				},
+				{
 					link: '/usuarios',
 					name: 'Usuários',
 					icon: 'fas fa-users',
@@ -131,7 +137,7 @@
 				a{
 					padding: 15px 30px;
 					display: flex;
-					color: rgba(173, 95, 166, 0.8);
+					color: rgba(55, 55, 55, 0.87);
 					transition: all ease .3s;
 					align-items: center;
 					.icone{
@@ -149,8 +155,8 @@
 					}
 					&.active,
 					&:hover{
-						color: #fffefe;
-						background-color: rgba(173, 95, 166, 0.8);
+						color: #ffffff;
+						background-color: rgba(201, 163, 200, 0.87);
 					}
 				}
 			}

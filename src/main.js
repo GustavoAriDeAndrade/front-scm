@@ -15,8 +15,8 @@ Vue.use(money, { precision: 2 })
 import '@mdi/font/css/materialdesignicons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
-// Vue.use(HeadLoader);
 
+// Vue.use(HeadLoader);
 
 Vue.config.productionTip = false
 

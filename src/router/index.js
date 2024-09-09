@@ -94,6 +94,14 @@ const routes = [
 			verificaLogin(to, from, next)
 		},
 		children: [
+		{
+				path: '/dashboard',
+				name: 'Dashboard',
+				beforeEnter(to, from, next) {
+					verificaGroup(to, from, next, 2)
+				},
+				component: () => import('@/views/pages/Inicial.vue'),
+			},
 			{
 				path: '/usuarios',
 				name: 'Usuários',
