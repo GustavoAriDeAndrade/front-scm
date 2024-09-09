@@ -14,8 +14,12 @@
 					<li class="horario">
 						{{hora}}
 					</li>
+				</ul>
+			</div>
+			<div class="usuario">
+				
 					<!--menu para interação do usuário-->
-					<li v-if="$store.getters.screen_size.width >= 768" class="usuario">
+					<li v-if="$store.getters.screen_size.width >= 768">
 						<v-menu
 							v-model="menu"
 							:close-on-content-click="false"
@@ -82,7 +86,6 @@
 							</v-card>
 						</v-menu>
 					</li>
-				</ul>
 			</div>
 		</div>
 		<!--modal para que o usuário possa editar seus dados pessoais-->
@@ -334,7 +337,7 @@
 <style lang="scss">
 	#nav-bar{
 		color: #f4f6fa ;
-		background-color: rgba(173, 95, 166, 0.8);
+		background-color:  rgba(255, 255, 255, 0.75);
 		.nav-bar-row{
 			display: flex;
 			align-items: center;
@@ -355,7 +358,7 @@
 						width: 30px;
 						height: 3px;
 						transform: translateY(-50%);
-						background-color: #f4f6fa;
+						background-color:#373737;
 						border-radius: 4px;
 						position: relative;
 						transition: all ease .3s; 
@@ -365,7 +368,7 @@
 							display: block;
 							width: 100%;
 							height: 100%;
-							background-color: #f4f6fa;
+							background-color: #373737;
 							border-radius: 4px;
 							position: absolute;
 							transition: all ease .3s;
@@ -398,6 +401,7 @@
 				}
 			}
 			.menu{
+				margin-right: 10%;
 				display: flex;
 				flex: none;
 				ul{
@@ -411,7 +415,7 @@
 						button{
 							background-color: transparent;
 							border: none;
-							color: #f5f5f5;
+							color:#373737;
 							display: flex;
 						}
 						&.horario{
@@ -420,82 +424,88 @@
 							font-size: 15px;
 							line-height: 20px;
 							align-items: center;
-							color: #f5f5f5;
+							color: #373737;
 						}
-						&.usuario{
-							justify-content: center;
-							align-items: center;
-							position: relative;
-							button{
-								justify-content: center;
-								align-items: center;
-								figure{
-									margin-bottom: 0;
-									margin-right: 15px;
-									height: 35px;
-									width: 35px;
-									background-color: #fff;
-									border-radius: 100%;
-									font-size: 18px;
-									display: flex;
-									align-items: center;
-									justify-content: center;
-									color: $primaryfontcolor;
-									border: 2px solid $primaryfontcolor;
-									text-transform: uppercase;
-								}
-							}
-							.sub-menu{
-								position: absolute;
-								z-index: 1;
-								left: 25%;
-								top: 100%;
-								padding-top: 15px;
-								transform: translateX(-50%);
-								&:after,
-								&:before{
-									content: '';
-									box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
-									position: absolute;
-								}
-								&:before{
-									top: 15px;
-									right: 0;
-									bottom: 0;
-									left: 0;
-									border-radius: 10px;
-									// border: 1px solid red;
-								}
-								&:after{
-									transform: rotate(45deg) translateX(-50%);
-									width: 20px;
-									height: 20px;
-									top: 13px;
-									box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
-									left: 50%;
-									border-radius: 5px 0;
-								}
-								ul{
-									background-color: #fff;
-									z-index: 2;
-									border-radius: 10px;
-									position: relative;
-									&:before{
-										content: '';
-										background-color:  #fff;
-										position: absolute;
-										transform: rotate(45deg) translateX(-50%);
-										width: 20px;
-										height: 20px;
-										top: -2px;
-										left: 50%;
-										border-radius: 5px 0;
-									}
-									a{
-										color:  rgba(173, 95, 166, 0.8);
-									}
-								}
-							}
+					}
+				}
+			}
+			.usuario{
+				justify-content: center;
+				align-items: center;
+				position: relative;
+				button{
+					justify-content: center;
+					align-items: center;
+					background-color: transparent;
+					border: none;
+					color:#373737;
+					display: flex;
+					margin-top: -25px;
+					margin-right: 10px;
+					figure{
+						margin-bottom: 0;
+						margin-right: 15px;
+						height: 35px;
+						width: 35px;
+						background-color: #fff;
+						border-radius: 100%;
+						font-size: 18px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						color: $primaryfontcolor;
+						border: 2px solid $primaryfontcolor;
+						text-transform: uppercase;
+					}
+				}
+				.sub-menu{
+					position: absolute;
+					z-index: 1;
+					left: 25%;
+					top: 100%;
+					padding-top: 15px;
+					transform: translateX(-50%);
+					&:after,
+					&:before{
+						content: '';
+						box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+						position: absolute;
+					}
+					&:before{
+						top: 15px;
+						right: 0;
+						bottom: 0;
+						left: 0;
+						border-radius: 10px;
+						// border: 1px solid red;
+					}
+					&:after{
+						transform: rotate(45deg) translateX(-50%);
+						width: 20px;
+						height: 20px;
+						top: 13px;
+						box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+						left: 50%;
+						border-radius: 5px 0;
+					}
+					ul{
+						background-color: #fff;
+						z-index: 2;
+						border-radius: 10px;
+						position: relative;
+						&:before{
+							content: '';
+							background-color:  #fff;
+							position: absolute;
+							transform: rotate(45deg) translateX(-50%);
+							width: 20px;
+							height: 20px;
+							top: -2px;
+							left: 50%;
+							border-radius: 5px 0;
+						}
+						a{
+							color:  rgba(173, 95, 166, 0.8);
 						}
 					}
 				}

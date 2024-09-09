@@ -22,17 +22,17 @@
                 :filters="filtros"
                 ref="tabela"
             >
-				<template v-slot:ativo="{ item }">
-					<span v-if="item.ativo">
-						Ativo
-						<img src="./../../assets/images/icon-ativo.png">
-					</span>
-					<span v-else>
-						Inativo
-						<img src="./../../assets/images/icon-inativo.png">
-					</span>
-				</template>
-				<!-- botões para ativação das modais presentes na tabela -->
+                <template v-slot:ativo="{ item }">
+                    <span v-if="item.ativo">
+                        Ativo
+                        <img src="./../../assets/images/icon-ativo.png">
+                    </span>
+                    <span v-else>
+                        Inativo
+                        <img src="./../../assets/images/icon-inativo.png">
+                    </span>
+                </template>
+                <!-- botões para ativação das modais presentes na tabela -->
                 <template v-slot:acoes="{ item }">
                     <v-btn class="primary-button" raised small @click="editarProduto(item.id)">
                         <i class="fas fa-cog"></i>
@@ -62,18 +62,18 @@
                                             outlined
                                         />
                                     </div>
-									<div v-if="produto.produto_id"  class="col-12 div-input">
-										<v-select 
-											:rules="[v => !!v || 'Campo Status obrigatório']" 
-											:items="['Ativo', 'Inativo']" 
-											v-model="produto.ativo" 
-											label="Status" 
-											placeholder="Status" 
-											background-color="white"
-											hide-details
-											outlined
-										/>
-									</div>
+                                    <div v-if="produto.produto_id" class="col-12 div-input">
+                                        <v-select 
+                                            :rules="[v => !!v || 'Campo Status obrigatório']" 
+                                            :items="['Ativo', 'Inativo']" 
+                                            v-model="produto.ativo" 
+                                            label="Status" 
+                                            placeholder="Status" 
+                                            background-color="white"
+                                            hide-details
+                                            outlined
+                                        />
+                                    </div>
                                 </div>
                             </v-form>
                         </v-container>
@@ -227,7 +227,7 @@
                 // atribui os dados do produto vindos do back à váriável local
                 this.produto.produto_id = await resp.data.product.id || ''
                 this.produto.nome = await resp.data.product.nome || ''
-				this.produto.ativo = await resp.data.product.ativo ? 'Ativo' : 'Inativo'
+                this.produto.ativo = await resp.data.product.ativo ? 'Ativo' : 'Inativo'
                 // mostra a modal de criar/editar o produto
                 this.createProduto()
             }else{
@@ -259,21 +259,24 @@
 </script>
 
 <style lang="scss">
-    #produtos{
+    #produtos {
         display: flex;
         max-height: 100%;
         padding: 24px;
         flex-wrap: wrap;
-        .tabela-produtos{
+        background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        .tabela-produtos {
             width: 100%;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9); /* Torna o fundo branco mais transparente */
             border-radius: 10px;
-            .novo-produto{
+            .novo-produto {
                 display: flex;
                 justify-content: flex-end;
                 padding-bottom: 0;
-                button{
-                    i, svg{
+                button {
+                    i, svg {
                         margin-right: 10px;
                     }
                     text-transform: capitalize;
@@ -281,36 +284,36 @@
             }
         }
     }
-    .v-dialog{
-        .headline{
+    .v-dialog {
+        .headline {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             font-weight: 600;
             color: #11263C;
         }
-        .v-card{
+        .v-card {
             background-color: #f9f9f9;
         }
-        .v-card__title{
-            span{
+        .v-card__title {
+            span {
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
                 font-weight: 600;
                 color: rgba(17, 38, 60, 1);
             }
-            svg{
+            svg {
                 margin-left: 15px;
-                path{
+                path {
                     fill: rgba(17, 38, 60, 1);
                 }
             }
         }
-        .v-text-field__details{
+        .v-text-field__details {
             display: none;
         }
-        .div-input{
+        .div-input {
             padding: 5px;
         }
     }

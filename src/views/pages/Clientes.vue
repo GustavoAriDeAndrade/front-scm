@@ -321,58 +321,63 @@
 </script>
 <!-- scss do front -->
 <style lang="scss">
-	#clientes{
+	#clientes { /* Ajuste para a classe correta */
 		display: flex;
 		max-height: 100%;
 		padding: 24px;
 		flex-wrap: wrap;
-		.tabela-cliente{
-      width: 100%;
-			background-color: #fff;
-    	border-radius: 10px;
-			.novo-cliente{
-				display: flex;
-				justify-content: flex-end;
-				padding-bottom: 0;
-				button{
-					i, svg{
-						margin-right: 10px;
-					}
-					text-transform: capitalize;
+		background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+		background-size: cover;
+		min-height: 100vh;
+	}
+	
+	.tabela-cliente {
+		width: 100%;
+		background-color: #fff;
+		border-radius: 10px;
+		.novo-cliente {
+			display: flex;
+			justify-content: flex-end;
+			padding-bottom: 0;
+			button {
+				i, svg {
+					margin-right: 10px;
 				}
+				text-transform: capitalize;
 			}
 		}
 	}
-	.v-dialog{
-		.headline{
+	
+	.v-dialog {
+		.headline {
 			display: flex;
 			flex-wrap: wrap;
 			align-items: center;
 			font-weight: 600;
 			color: #11263C;
 		}
-		.v-card{
+		.v-card {
 			background-color: #f9f9f9;
 		}
-		.v-card__title{
-			span{
+		.v-card__title {
+			span {
 				display: flex;
 				flex-wrap: wrap;
 				align-items: center;
 				font-weight: 600;
 				color: rgba(17, 38, 60, 1);
 			}
-			svg{
+			svg {
 				margin-left: 15px;
-				path{
+				path {
 					fill: rgba(17, 38, 60, 1);
 				}
 			}
 		}
-		.v-text-field__details{
+		.v-text-field__details {
 			display: none;
 		}
-		.div-input{
+		.div-input {
 			padding: 5px;
 		}
 	}
