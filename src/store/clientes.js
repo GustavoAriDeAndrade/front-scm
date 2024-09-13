@@ -79,6 +79,21 @@ export default {
 			return resp
 		},
 		/**
+		 * função para listar os clientes cadastrados
+		 * @param {*} param0 
+		 * @returns 
+		 */
+		async getClientesSelect({ commit }) {
+			// seta o status do store de clientes para loading
+			await commit('SET_STATUS', 'loading')
+			// faz uma requisição para o back e coleta o resultado na variavel resp
+			const resp = await API.get('/selectCliente')
+			// seta o status do store de cliente para vazio 
+			await commit('SET_STATUS', '')
+			// retorna a resposta da requisição
+			return resp
+		},
+		/**
 		 * função para criar um novo cliente
 		 * @param {*} param0 
 		 * @param {*} dados_cliente 

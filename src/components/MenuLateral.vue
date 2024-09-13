@@ -72,6 +72,12 @@
 					group: ['admin', 'caixa'],
 				},
 				{
+					link: '/caixa',
+					name: 'Caixa',
+					icon: 'fas fa-chart-bar',
+					group: ['admin', 'caixa']
+				},
+				{
 					link: '/relatorios',
 					name: 'Relatórios',
 					icon: 'fas fa-chart-bar',
