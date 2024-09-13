@@ -110,6 +110,21 @@ export default {
             // retorna a resposta da requisição
             return resp
         },
+		/**
+		 * função para listar os produtos cadastrados
+		 * @param {*} param0 
+		 * @returns 
+		 */
+		async getProdutosSelect({ commit }) {
+			// seta o status do store de produtos para loading
+			await commit('SET_STATUS', 'loading')
+			// faz uma requisição para o back e coleta o resultado na variavel resp
+			const resp = await API.get('/selectProduto')
+			// seta o status do store de cliente para vazio 
+			await commit('SET_STATUS', '')
+			// retorna a resposta da requisição
+			return resp
+		},
     },
     // funções para coletar o estado do store de produtos
     getters: {

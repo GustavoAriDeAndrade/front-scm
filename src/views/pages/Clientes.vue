@@ -59,7 +59,7 @@
 											label="Telefone" 
 											placeholder="Telefone" 
 											background-color="white"
-                      v-mask="'(##) # ####-####'"
+                      						v-mask="'(##) # ####-####'"
 											hide-details
 											outlined
 										/>
