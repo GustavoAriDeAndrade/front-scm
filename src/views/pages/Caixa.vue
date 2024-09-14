@@ -3,7 +3,7 @@
         <div class="campos">
             <div class="col-12 filtros">
                 <div class="col-3 titulo">
-                    <p>CAIXA <v-icon>fas fa-chart-bar</v-icon></p>
+                    <p>CAIXA <v-icon>fas fa-store</v-icon></p>
                 </div>
                 <div class="row">
                     <div class="col-8">
@@ -714,6 +714,10 @@
                     this.dialog_resposta = true
                     // reseta a variável
                     this.venda.valor_entrada = 0.00
+                    // corrigi o valor restante
+                    this.valor_restante = this.venda.valor_total
+                    // corrigi o valor das parcelas
+                    this.venda.valor_parcelas = this.venda.valor_total
                 }
             },
             // função para calcular o valor das parcelas

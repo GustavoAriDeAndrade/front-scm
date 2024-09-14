@@ -49,8 +49,8 @@
 			all_menus: [
 				{
 					link: '/dashboard',
-					name: 'Dashboard',
-					icon: 'far fa-list-alt',
+					name: 'SCM',
+					icon: 'fas fa-ellipsis-v',
 					group: ['admin', 'caixa'],
 				},
 				{
@@ -68,13 +68,19 @@
 				{
 					link: '/produtos',
 					name: 'Produtos',
-					icon: 'far fa-list-alt',
+					icon: 'fas fa-tshirt',
 					group: ['admin', 'caixa'],
 				},
 				{
 					link: '/caixa',
 					name: 'Caixa',
-					icon: 'fas fa-chart-bar',
+					icon: 'fas fa-store',
+					group: ['admin', 'caixa']
+				},
+				{
+					link: '/contas',
+					name: 'Contas',
+					icon: 'fas fa-money-bill-wave-alt',
 					group: ['admin', 'caixa']
 				},
 				{

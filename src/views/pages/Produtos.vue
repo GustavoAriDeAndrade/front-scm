@@ -17,7 +17,7 @@
                 :headers="headers"
                 :search="true"
                 :title="'Produtos'"
-                :icone="'far fa-list-alt'"
+                :icone="'fas fa-tshirt'"
                 :pagination="true"
                 :filters="filtros"
                 ref="tabela"
