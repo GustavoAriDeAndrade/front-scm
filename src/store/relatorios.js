@@ -25,7 +25,7 @@ export default {
          * @param {*} dados 
          * @returns 
          */
-        async relatorioChat({ commit }, dados){
+        async relatorio({ commit }, dados){
             // seta o status do store para loading
             await commit('SET_STATUS', 'loading')
             // faz uma requisição para o back e coleta o resultado na varáivel resp

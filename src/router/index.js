@@ -146,7 +146,7 @@ const routes = [
 				path: '/relatorios',
 				name: 'Relatórios',
 				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 4)
+					verificaGroup(to, from, next, 2)
 				},
 				component: () => import('@/views/pages/Relatorios.vue')
 			},

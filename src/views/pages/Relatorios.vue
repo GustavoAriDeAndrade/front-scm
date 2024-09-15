@@ -11,12 +11,12 @@
                         <v-form ref="form_selects">
                             <v-icon>fas fa-filter</v-icon>
                             <v-select
-                                :items="$store.getters.companies"
-                                item-text="name" 
-                                item-value="uuid"
-                                v-model="filtro.empresa_uuid" 
-                                label="Empresa"
-                                placeholder="Empresa" 
+                                :items="relatorios"
+                                item-text="nome" 
+                                item-value="id"
+                                v-model="filtro.relatorio_id" 
+                                label="Relatório"
+                                placeholder="Relatório" 
                                 background-color="white"
                                 hide-details
                                 outlined
@@ -93,17 +93,21 @@
                             <thead>
                                 <tr>
                                     <th class="text-left">
-                                        Onde nos Conheceu
+                                        Produto
                                     </th>
                                     <th class="text-left">
-                                        Total
+                                        Quantidade Vendida
+                                    </th>
+                                    <th class="text-left">
+                                        Valor Arrecadado
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="item in dados_relatorio" :key="item.name">
+                                <tr v-for="item in dados_relatorio" :key="item.nome">
                                     <td>{{ item.nome }}</td>
                                     <td>{{ item.total }}</td>
+                                    <td>R$ {{ item.valor }}</td>
                                 </tr>
                             </tbody>
                         </template>
@@ -123,6 +127,8 @@
     import DialogMensagem from '@/components/DialogMensagem.vue'
     // importa o componente de Loader
     import Loader from '@/components/Loader.vue'
+    // importa o moment
+    import moment from 'moment'
 
     // exporta o componente
     export default{
@@ -151,16 +157,24 @@
 			menu1: false,			
             // abre o segundo calendário do filtro
 			menu2: false,
+            // variável para os relatórios disponíveis
+            relatorios: [
+                {
+                    nome: 'Produtos Vendidos',
+                    id: 1
+                }
+            ],
             // variável para o filtro
             filtro: {
-                empresa_uuid: '',
+                relatorio_id: 1,
                 data_de: '',
                 data_ate: '',
             },
             // variável para armazenar os dados do relatório
             dados_relatorio: [{
                 nome: '',
-                total: ''
+                total: '',
+                valor: ''
             }]
         }),
         // variáveis computadas em tempo real
@@ -187,14 +201,14 @@
                 // prepara os parâmetros
                 let dados = {
                     // armazena a empresa selecionada
-                    company_uuid: this.filtro.empresa_uuid,
+                    relatorio_id: this.filtro.relatorio_id,
                     // armazena a data inicial selecionada
-                    start_date: this.data_de_formatada,
+                    data_de: moment(this.data_de_formatada, 'DD/MM/YYYY').format('YYYY-MM-DD 00:00:00'),
                     // armazena a data final selecionada
-                    end_date: this.data_ate_formatada,
+                    date_ate: moment(this.data_ate_formatada, 'DD/MM/YYYY').format('YYYY-MM-DD 23:59:59'),
                 }
                 // rota para filtrar os relatórios
-                resp = await store.dispatch('relatorioChat', dados)
+                resp = await store.dispatch('relatorio', dados)
                 // caso algo tenha dado errado
                 if(resp.status != 200 && resp.status != 204){
                     // atribui o título da mensagem
@@ -203,23 +217,34 @@
                     this.resposta.mensagem = await resp.data.message || resp.data.error
                     // mostra a mensagem
                     this.dialog_resposta = true
-                // caso o usuário não tenha preenchido o filtro
-                }else if(resp.status == 204){
-                    // atribui o título da mensagem
-                    this.resposta.titulo = 'Preencha os Campos!'
-                    // atribui o corpo da mensagem
-                    this.resposta.mensagem = 'Selecione a Empresa primeiro!'
-                    // mostra a mensagem
-                    this.dialog_resposta = true
                 // caso tenha dado certo
                 }else{
+                    // atribui os produtos
+                    let produtos = resp.data.produtos
+                    // cria a variável para armazenar os produtos
+                    const mapaProdutos = {}
+                    // percorremos os produtos
+                    produtos.forEach(produto => {
+                        // Se o produto já existe no mapa
+                        if(mapaProdutos[produto.produto_id]){
+                            // somamos a quantidade
+                            mapaProdutos[produto.produto_id].quantidade += produto.quantidade
+                        // Se não existe,
+                        } else {
+                            // adicionamos o produto ao mapa
+                            mapaProdutos[produto.produto_id] = { ...produto }
+                        }
+                    })
+                    // Convertendo o objeto de volta para um array
+                    const resultado = Object.values(mapaProdutos)
                     // faz as atribuições
-                    for(let i = 0; i < resp.data.dados.length; i++){
+                    for(let i = 0; i < resultado.length; i++){
                         if(this.dados_relatorio[i] == undefined){
                             this.dados_relatorio[i] = {}
                         }
-                        this.dados_relatorio[i].nome = resp.data.dados[i].nome
-                        this.dados_relatorio[i].total = resp.data.dados[i].total
+                        this.dados_relatorio[i].nome = resultado[i].product.nome
+                        this.dados_relatorio[i].total = resultado[i].quantidade
+                        this.dados_relatorio[i].valor = parseInt(resultado[i].quantidade) * parseFloat(resultado[i].valor_unidade)
                     }
                 }
                 // retira o loading do componente
@@ -281,7 +306,7 @@
 						align-items: center;
 						svg{
 							font-size: 15px;
-							color: $quaternarycolor;
+							color: #3b3c3c;
 						}
 						.v-input{
 							display: flex;

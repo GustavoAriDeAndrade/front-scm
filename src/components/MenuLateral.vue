@@ -87,7 +87,7 @@
 					link: '/relatorios',
 					name: 'Relatórios',
 					icon: 'fas fa-chart-bar',
-					group: ['company-admin']
+					group: ['admin']
 				}
 			],
 			respective_menus: [],
