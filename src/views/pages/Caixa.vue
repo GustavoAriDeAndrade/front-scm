@@ -624,49 +624,49 @@
                 // verifica se foi adicionado produtos
                 if(this.venda.produtos[0] == undefined){
                     // atribui a mensagem
-                    this.resposta.mensagem = this.resposta.mensagem + 'Produto que será comprado'
+                    this.resposta.mensagem = 'Produto que será comprado'
                     // retorna 
                     return 1
                 }
                 // verifica se foi preenchido o valor total da compra
                 if(this.venda.valor_total == ''){
                     // atribui a mensagem
-                    this.resposta.mensagem = this.resposta.mensagem + 'Valor total da compra'
+                    this.resposta.mensagem = 'Valor total da compra'
                     // retorna 
                     return 1
                 }
                 // verifica se foi preenchida forma de pagamento
                 if(this.venda.valor_entrada != '' && this.venda.forma_pagamento_id == ''){
                     // atribui a mensagem
-                    this.resposta.mensagem = this.resposta.mensagem + 'Forma de pagamento da compra'
+                    this.resposta.mensagem = 'Forma de pagamento da compra'
                     // retorna 
                     return 1
                 }
                 // verifica se foi preenchido a quantidade de parcelas
                 if(this.venda.quantidade_parcelas == ''){
                     // atribui a mensagem
-                    this.resposta.mensagem = this.resposta.mensagem + 'Quantidade de parcelas do pagamento'
+                    this.resposta.mensagem = 'Quantidade de parcelas do pagamento'
                     // retorna 
                     return 1
                 }
                 // verifica se foi preenchido o valor das parcelas
                 if(this.venda.valor_total != this.venda.valor_entrada && this.venda.valor_parcelas == ''){
                     // atribui a mensagem
-                    this.resposta.mensagem = this.resposta.mensagem + 'Valor de cada parcela'
+                    this.resposta.mensagem = 'Valor de cada parcela'
                     // retorna 
                     return 1
                 }
                 // verifica se foi preenchido o vencimento da primeira parcela
                 if(this.venda.data_parcela == ''){
                     // atribui a mensagem
-                    this.resposta.mensagem = this.resposta.mensagem + 'Vencimento da primeira parcela'
+                    this.resposta.mensagem = 'Vencimento da primeira parcela'
                     // retorna 
                     return 1
                 }
                 // verifica a data de vencimento da primeira parcela
                 if(moment(this.venda.data_parcela, 'DD/MM/YYYY').format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')){
                     // atribui a mensagem
-                    this.resposta.mensagem = this.resposta.mensagem + 'Vencimento da primeira parcela não pode ser menor que o dia atual'
+                    this.resposta.mensagem = 'Vencimento da primeira parcela não pode ser menor que o dia atual'
                     // retorna 
                     return 1
                 }

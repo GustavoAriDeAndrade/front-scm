@@ -135,12 +135,12 @@ const routes = [
 				component: () => import('@/views/pages/Caixa.vue')
 			},
 			{
-				path: '/contas',
-				name: 'Contas',
+				path: '/vendas',
+				name: 'Vendas',
 				beforeEnter(to, from, next) {
 					verificaGroup(to, from, next, 2)
 				},
-				component: () => import('@/views/pages/Contas.vue')
+				component: () => import('@/views/pages/Vendas.vue')
 			},
 			{
 				path: '/relatorios',

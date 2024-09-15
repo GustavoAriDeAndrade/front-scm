@@ -78,8 +78,8 @@
 					group: ['admin', 'caixa']
 				},
 				{
-					link: '/contas',
-					name: 'Contas',
+					link: '/vendas',
+					name: 'Vendas',
 					icon: 'fas fa-money-bill-wave-alt',
 					group: ['admin', 'caixa']
 				},
