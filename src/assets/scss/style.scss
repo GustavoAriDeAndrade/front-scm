@@ -157,6 +157,23 @@ a{
     }
 }
 
+.success-button{
+    background-color: #28b636 !important;
+    color: #fff !important;
+    border: 1px solid #28b636;
+    border-radius: 20px;
+    text-transform: capitalize;
+    padding: 0 20px !important;
+    transition: all ease .3s;
+    span{
+        font-size: 16px;    
+    }
+    &:hover{
+        background-color: #fff !important;
+        color: #28b636 !important;
+    }
+}
+
 ::-webkit-scrollbar {
     width: 7px;
     height: 5px;
