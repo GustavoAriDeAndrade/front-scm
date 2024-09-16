@@ -355,7 +355,7 @@
 </script>
 <!-- scss do front -->
 <style lang="scss">
-	#clientes { /* Ajuste para a classe correta */
+	#clientes { 
 		display: flex;
 		max-height: 100%;
 		padding: 24px;

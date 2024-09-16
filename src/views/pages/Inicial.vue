@@ -1,4 +1,3 @@
-
 <template>
   <div id="inicio">
     <div class="button-row">
@@ -28,12 +27,22 @@
           Caixa
         </span>
       </button>
-      <button @click="goToPage('Contas')" class="custom-button">
+      <button @click="goToPage('Vendas')" class="custom-button">
         <span class="icone">
           <i class="fas fa-money-bill-wave-alt"></i>
         </span>
         <span class="texto">
-          Contas
+          Vendas
+        </span>
+      </button>
+    </div>
+    <div class="button-row">
+      <button @click="goToPage('Relatórios')" class="custom-button">
+        <span class="icone">
+          <i class="fas fa-chart-bar"></i>
+        </span>
+        <span class="texto">
+          Relatórios
         </span>
       </button>
     </div>

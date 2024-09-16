@@ -4,7 +4,7 @@
             <div class="col-12 filtros">
                 <div class="row row-filtros">
                     <div class="col-3 titulo">
-                        <p>RELATÓRIO <v-icon>fas fa-chart-bar</v-icon></p>
+                        <p>RELATÓRIOS<v-icon>fas fa-chart-bar</v-icon></p>
                     </div>
                     <!-- filtros para os gráficos -->
                     <div class="col-9 selects">
@@ -278,6 +278,9 @@
 		max-height: 100%;
 		padding: 24px;
 		flex-wrap: wrap;
+        background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
 
         .graficos{
 			background-color: #fff;
@@ -290,7 +293,7 @@
 					p{
 						color: #11263C;
 						font-weight: 500;
-						font-size: 14px;
+						font-size: 17px;
 						line-height: 58px;
 
 						svg{
