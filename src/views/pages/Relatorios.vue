@@ -99,6 +99,9 @@
                                         Quantidade Vendida
                                     </th>
                                     <th class="text-left">
+                                        Preço Unitário
+                                    </th>
+                                    <th class="text-left">
                                         Valor Arrecadado
                                     </th>
                                 </tr>
@@ -107,6 +110,7 @@
                                 <tr v-for="item in dados_relatorio" :key="item.nome">
                                     <td>{{ item.nome }}</td>
                                     <td>{{ item.total }}</td>
+                                    <td>R$ {{ item.preco_unitario }}</td>
                                     <td>R$ {{ item.valor }}</td>
                                 </tr>
                             </tbody>
@@ -174,6 +178,7 @@
             dados_relatorio: [{
                 nome: '',
                 total: '',
+                preco_unitario: '',
                 valor: ''
             }]
         }),
@@ -244,6 +249,7 @@
                         }
                         this.dados_relatorio[i].nome = resultado[i].product.nome
                         this.dados_relatorio[i].total = resultado[i].quantidade
+                        this.dados_relatorio[i].preco_unitario = resultado[i].valor_unidade
                         this.dados_relatorio[i].valor = parseInt(resultado[i].quantidade) * parseFloat(resultado[i].valor_unidade)
                     }
                 }

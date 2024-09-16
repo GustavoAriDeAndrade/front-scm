@@ -21,6 +21,16 @@
 				:filters="filtros"
 				ref="tabela"
 			>
+				<template v-slot:ativo="{ item }">
+					<span v-if="item.ativo">
+						Ativo
+						<img src="./../../assets/images/icon-ativo.png">
+					</span>
+					<span v-else>
+						Inativo
+						<img src="./../../assets/images/icon-inativo.png">
+					</span>
+				</template>
 				<!-- botões para ativação das modais presentes na tabela -->
 				<template v-slot:acoes="{ item }">
 					<v-btn class="primary-button" raised small @click="editarCliente(item.id)">
@@ -33,8 +43,8 @@
 			<v-dialog v-model="dialog_cliente" persistent max-width="600px">
 				<v-card>
 					<v-card-title>
-						<span v-if="cliente.cliente_id" class="headline">Editar Cliente <v-icon>fa-user-edit</v-icon> </span>
-						<span v-else class="headline"><v-icon style="margin-right: 10px;">fa-user-plus</v-icon> Novo Cliente</span>
+						<span v-if="cliente.cliente_id" class="headline">Editar Cliente</span>
+						<span v-else class="headline">Novo Cliente</span>
 					</v-card-title>
 					<v-card-text>
 						<v-container>
@@ -109,6 +119,18 @@
 											outlined
 										/>
 									</div>
+									<div v-if="cliente.cliente_id"  class="col-6 div-input">
+										<v-select 
+											:rules="[v => !!v || 'Campo Status obrigatório']" 
+											:items="['Ativo', 'Inativo']" 
+											v-model="cliente.ativo" 
+											label="Status" 
+											placeholder="Status" 
+											background-color="white"
+											hide-details
+											outlined
+										/>
+									</div>
 								</div>
 							</v-form>
 						</v-container>
@@ -172,6 +194,7 @@
 				observacao: '',
 				rua: '',
 				numero: '',
+				ativo: '',
 			},
 			// variável para o cabeçalho da tabela
 			headers: [
@@ -188,6 +211,11 @@
 				{
 					value: 'email',
 					text: 'Email',
+					sortable: true,
+				},
+				{
+					value: 'ativo',
+					text: 'Status',
 					sortable: true,
 				},
 				{
@@ -232,6 +260,8 @@
 					}
 					// caso exista um cliente_id 
 					if(this.cliente.cliente_id){
+						// coleta o status do cliente
+						dados.ativo = this.cliente.ativo == 'Ativo' ? true : false
 						// armazena os dados para realizar a atualização
 						let date_update = {
 							dados_cliente: dados,
@@ -240,6 +270,8 @@
 						// rota para a atualização dos dados do cliente
 						resp = await store.dispatch('putCliente', date_update)
 					}else{
+						// coleta o status do cliente
+						dados.ativo = true
 						// rota para a criação dos dados dados do cliente
 						resp = await store.dispatch('postClientes', dados)
 					}
@@ -284,6 +316,7 @@
 					this.cliente.observacao = await resp.data.client.observacao || ''
 					this.cliente.rua = await resp.data.client.rua || ''
 					this.cliente.numero = await resp.data.client.numero || ''
+					this.cliente.ativo = await resp.data.client.ativo ? 'Ativo' : 'Inativo'
 					// mostra a modal de creat/edit cliente
 					this.createCliente()
 				}else{
