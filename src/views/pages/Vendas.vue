@@ -1,3 +1,4 @@
+
 <template>
     <div id="vendas">
         <div class="tabela-vendas">

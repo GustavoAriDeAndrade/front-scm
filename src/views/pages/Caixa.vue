@@ -796,6 +796,8 @@
 		max-height: 100%;
 		padding: 24px;
 		flex-wrap: wrap;
+        background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+        background-size: cover;
 
         .campos{
 			background-color: #fff;

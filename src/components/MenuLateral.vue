@@ -49,7 +49,7 @@
 			all_menus: [
 				{
 					link: '/dashboard',
-					name: 'SCM',
+					name: 'Início',
 					icon: 'fas fa-ellipsis-v',
 					group: ['admin', 'caixa'],
 				},
@@ -125,7 +125,7 @@
 		height: 100vh;
 		position: relative;
 		z-index: 1;
-		background-color: #fff;
+		background-color:  #f5f2f2d0;
 		@media (max-width: 768px) {
 			overflow-y: auto;
 		}
@@ -143,13 +143,13 @@
 			list-style: none;
 			margin: 0;
 			width: 100%;
-			border-top: 1px solid #DEDEDE;
+			border-top: 1px solid #d4d1d1;
 			li{
-				border-bottom: 1px solid #DEDEDE;
+				border-bottom: 1px solid #e9e2e981;
 				a{
 					padding: 15px 30px;
 					display: flex;
-					color: rgba(55, 55, 55, 0.87);
+					color: #413240;
 					transition: all ease .3s;
 					align-items: center;
 					.icone{
@@ -167,8 +167,8 @@
 					}
 					&.active,
 					&:hover{
-						color: #ffffff;
-						background-color: rgba(201, 163, 200, 0.87);
+						color: #a3759b;
+						background-color: rgba(218, 191, 217, 0.596);
 					}
 				}
 			}
@@ -212,7 +212,7 @@
 								left: 20px;
 								border-radius: 5px;
 								z-index: 1;
-								background-color: #fff;
+								background-color: #ffffff;
 							}
 							&:after{
 								transform: rotate(45deg) translateY(-50%);
@@ -246,7 +246,7 @@
 							.texto{
 								transform: translateX(100%);
 								opacity: 1;
-								color: rgba(173, 95, 166, 0.8);
+								color: #242123;
 							}
 						}
 					}
