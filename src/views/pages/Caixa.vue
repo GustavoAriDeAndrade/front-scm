@@ -465,7 +465,9 @@
 						// coleta o telefone do cliente
 						telefone: this.cliente.telefone,
 						// coleta a observação do cliente
-						observacao: this.cliente.observacao,		
+						observacao: this.cliente.observacao,
+                        // seta o cliente como ativo
+                        ativo: true,		
 					}
                     // rota para a criação dos dados dados do cliente
                     resp = await store.dispatch('postClientes', dados)

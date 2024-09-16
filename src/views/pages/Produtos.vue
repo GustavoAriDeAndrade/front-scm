@@ -44,8 +44,8 @@
             <v-dialog v-model="dialog_produto" persistent max-width="550px">
                 <v-card>
                     <v-card-title>
-                        <span v-if="produto.produto_id" class="headline">Editar Produtos <v-icon>fa-user-edit</v-icon> </span>
-                        <span v-else class="headline"><v-icon style="margin-right: 10px;">fa-user-plus</v-icon> Novo Produto</span>
+                        <span v-if="produto.produto_id" class="headline">Editar Produtos</span>
+                        <span v-else class="headline">Novo Produto</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>

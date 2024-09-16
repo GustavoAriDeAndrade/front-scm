@@ -43,8 +43,8 @@
 			<v-dialog v-model="dialog_usuario" persistent max-width="600px">
 				<v-card>
 					<v-card-title>
-						<span v-if="usuario.usuario_id" class="headline">Editar Usuário <v-icon>fa-user-edit</v-icon> </span>
-						<span v-else class="headline"><v-icon style="margin-right: 10px;">fa-user-plus</v-icon> Novo Usuário</span>
+						<span v-if="usuario.usuario_id" class="headline">Editar Usuário</span>
+						<span v-else class="headline">Novo Usuário</span>
 					</v-card-title>
 					<v-card-text>
 						<v-container>
