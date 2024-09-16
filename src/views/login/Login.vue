@@ -1,3 +1,4 @@
+login 
 <template>
 	<div id="login">
 		<div class="login-meio">
@@ -136,8 +137,8 @@
 	}
 
 	.v-input--hide-spin-buttons input[type=number] {
-		-moz-appearance: textfield; /* Para Firefox */
-		appearance: textfield; /* Para outros navegadores */
+		-moz-appearance: textfield; 
+		appearance: textfield; 
 	}
 
 	.btn-entrar {
@@ -157,12 +158,12 @@
 	}
 
 	.fa-rotate-90 {
-		filter: rotate(90deg); /* Compatível com navegadores modernos */
+		filter: rotate(90deg); 
 	}
 
 	html {
-		-webkit-text-size-adjust: 100%; /* Para navegadores baseados no WebKit */
-		text-size-adjust: 100%; /* Para outros navegadores modernos */
+		-webkit-text-size-adjust: 100%; 
+		text-size-adjust: 100%; 
 	}
 
 	.links {

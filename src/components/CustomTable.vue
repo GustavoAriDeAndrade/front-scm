@@ -1,3 +1,4 @@
+custom table 
 <template>
 	<div class="custom-table">
 		<div class="row table-content">
@@ -222,7 +223,7 @@
 			.btn-opcoes-headers{
 				position: relative;
 				.btn-only-icon{
-					background-color: rgba(212, 97, 203, 0.8) !important;
+					background-color: rgba(201, 163, 200, 0.87) !important;
 				}
 				.sub-menu-headers{
 					min-width: 310px;
@@ -237,7 +238,7 @@
 					flex-direction: column;
 					z-index: 1;
 					.btn-exportar{
-						background-color: rgba(212, 97, 203, 0.8);
+						background-color: rgba(201, 163, 200, 0.87);
 					}
 					.span-titulo-submenu{
 						text-align: center;
@@ -375,7 +376,7 @@
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					background: rgba(17, 38, 60, 1);
+					background: rgba(155, 115, 153, 0.87);
 					border: 1px solid #C8C8C8;
 					border-radius: 0 30px 30px 0 ;
 					width: 60px;

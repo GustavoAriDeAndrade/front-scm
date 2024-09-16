@@ -1,3 +1,4 @@
+
 <template>
     <div id="produtos">
         <div class="tabela-produtos">
@@ -269,7 +270,7 @@
         min-height: 100vh;
         .tabela-produtos {
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* Torna o fundo branco mais transparente */
+            background-color: #fff;
             border-radius: 10px;
             .novo-produto {
                 display: flex;
