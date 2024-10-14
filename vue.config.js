@@ -19,7 +19,7 @@ module.exports = {
 		  staticErrorPage: 'error.html',
 		  assetPath: 'dist',
 		  assetMatch: '**',
-		  deployPath: 'okagenda/pasta_build',
+		  deployPath: 'scm/pasta_build',
 		  acl: 'public-read',
 		  pwa: true,
 		  enableCloudfront: true,

@@ -6,7 +6,7 @@
 				<!-- botão para ativação da modal -->
 				<v-btn class="primary-button" raised @click="createCliente">
 					<i class="fas fa-user-plus"></i> 
-					Cadastrar Cliente
+					Novo Cliente
 				</v-btn>
 			</div>
 			<!-- tabela que ira conter as informações de cada cliente -->
@@ -89,10 +89,10 @@
 									</div>
 									<div class="col-10 div-input">
 										<v-text-field 
-											:rules="[v => !!v || 'Campo Rua obrigatório']" 
+											:rules="[v => !!v || 'Campo Logradouro obrigatório']" 
 											v-model="cliente.rua" 
-											label="Rua" 
-											placeholder="Rua" 
+											label="Logradouro" 
+											placeholder="Logradouro" 
 											background-color="white"
 											hide-details
 											outlined
@@ -286,14 +286,8 @@
 						this.dialog_resposta = true
 					// caso tenha dado tudo certo
 					}else{
-						// atribui o título da mensagem 
-						this.resposta.titulo = 'Cliente ' +  (this.cliente.cliente_id ? 'editado!' : 'cadastrado!')
-						// atribui o corpo da mensagem 
-						this.resposta.mensagem = 'Cliente ' + (this.cliente.cliente_id ? 'editado' : 'cadastrado') + ' com sucesso!'
 						// fecha a modal de create/edit cliente
 						this.closeCliente()
-						// mostra a mensagem
-						this.dialog_resposta = true
 					}
 					// retira o loading do componente
 					this.loading = false

@@ -5,9 +5,8 @@
             <!-- botão para abrir a modal-->
             <div class="col-12 novo-produto">
                 <v-btn class="primary-button" raised @click="createProduto">
-                    <i class="fas fa-list-ol"></i>
                     <i class="fas fa-plus"></i>
-                    Cadastrar Produto
+                    Novo Produto
                 </v-btn>
             </div>
             <!-- tabela que ira conter os produtos cadastrados -->
@@ -202,14 +201,8 @@
                     // mostra a mensagem
                     this.dialog_resposta = true
                 }else{
-                    // atribui o título da mensagem
-                    this.resposta.titulo = 'Produto ' + (this.produto.produto_id ? 'editado!' : 'cadastrado!')
-                    // atribui o corpo da mensagem
-                    this.resposta.mensagem = 'Produto ' + (this.produto.produto_id ? 'editado' : 'cadastrado') + ' com sucesso!'
                     // fecha a modal de create/edit produto
                     this.closeProduto()
-                    // mostra a mensagem
-                    this.dialog_resposta = true
                 }
                 // retira o loading do componente
                 this.loading = false

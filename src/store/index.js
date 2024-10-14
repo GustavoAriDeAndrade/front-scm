@@ -8,8 +8,8 @@ import application from "@/store/application.js"
 import produtos from "@/store/produtos.js"
 import relatorios from '@/store/relatorios'
 import clientes from '@/store/clientes'
-import caixa from '@/store/caixa'
 import vendas from '@/store/vendas'
+import pagamentos from '@/store/pagamentos'
 
 Vue.use(Vuex)
 
@@ -22,7 +22,7 @@ export default new Vuex.Store({
 		produtos,
 		relatorios,
 		clientes,
-		caixa,
 		vendas,
+		pagamentos,
 	},
 })
