@@ -6,7 +6,7 @@
 				<!-- botão para ativação da modal -->
 				<v-btn class="primary-button" raised @click="createUser">
 					<i class="fas fa-user-plus"></i> 
-					Cadastrar Usuário
+					Novo Usuário
 				</v-btn>
 			</div>
 			<!-- tabela que ira conter as informações de cada usuário -->
@@ -293,14 +293,8 @@
 						this.dialog_resposta = true
 					// caso tenha dado tudo certo
 					}else{
-						// atribui o título da mensagem 
-						this.resposta.titulo = 'Usuário ' +  (this.usuario.usuario_id ? 'editado!' : 'cadastrado!')
-						// atribui o corpo da mensagem 
-						this.resposta.mensagem = 'Usuário ' + (this.usuario.usuario_id ? 'editado' : 'cadastrado') + ' com sucesso!'
 						// fecha a modal de create/edit usuário
 						this.closeUsuario()
-						// mostra a mensagem
-						this.dialog_resposta = true
 					}
 					// retira o loading do componente
 					this.loading = false

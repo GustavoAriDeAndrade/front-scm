@@ -127,20 +127,20 @@ const routes = [
 				component: () => import('@/views/pages/Produtos.vue')
 			},
 			{
-				path: '/caixa',
-				name: 'Caixa',
-				beforeEnter(to, from, next) {
-					verificaGroup(to, from, next, 2)
-				},
-				component: () => import('@/views/pages/Caixa.vue')
-			},
-			{
 				path: '/vendas',
 				name: 'Vendas',
 				beforeEnter(to, from, next) {
 					verificaGroup(to, from, next, 2)
 				},
 				component: () => import('@/views/pages/Vendas.vue')
+			},
+			{
+				path: '/pagamentos',
+				name: 'Pagamentos',
+				beforeEnter(to, from, next) {
+					verificaGroup(to, from, next, 2)
+				},
+				component: () => import('@/views/pages/Pagamentos.vue')
 			},
 			{
 				path: '/relatorios',

@@ -20,20 +20,20 @@
       </button>
     </div>
     <div class="button-row">
-      <button @click="goToPage('Caixa')" class="custom-button">
+      <button @click="goToPage('Vendas')" class="custom-button">
         <span class="icone">
           <i class="fas fa-store"></i>
         </span>
         <span class="texto">
-          Caixa
+          Vendas
         </span>
       </button>
-      <button @click="goToPage('Contas')" class="custom-button">
+      <button @click="goToPage('Pagamentos')" class="custom-button">
         <span class="icone">
           <i class="fas fa-money-bill-wave-alt"></i>
         </span>
         <span class="texto">
-          Contas
+          Pagamentos
         </span>
       </button>
     </div>

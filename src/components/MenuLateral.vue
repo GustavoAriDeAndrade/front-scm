@@ -72,14 +72,14 @@
 					group: ['admin', 'caixa'],
 				},
 				{
-					link: '/caixa',
-					name: 'Caixa',
+					link: '/vendas',
+					name: 'Vendas',
 					icon: 'fas fa-store',
 					group: ['admin', 'caixa']
 				},
 				{
-					link: '/vendas',
-					name: 'Vendas',
+					link: '/pagamentos',
+					name: 'Pagamentos',
 					icon: 'fas fa-money-bill-wave-alt',
 					group: ['admin', 'caixa']
 				},
