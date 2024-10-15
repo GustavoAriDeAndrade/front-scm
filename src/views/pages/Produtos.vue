@@ -22,6 +22,11 @@
                 :filters="filtros"
                 ref="tabela"
             >
+                <template v-slot:valor="{ item }">
+                    <span>
+                        R$ {{ item.valor }}
+                    </span>
+                </template>
                 <template v-slot:ativo="{ item }">
                     <span v-if="item.ativo">
                         Ativo
@@ -60,6 +65,20 @@
                                             background-color="white"
                                             hide-details
                                             outlined
+                                        />
+                                    </div>
+                                    <div class="col-12 div-input">
+                                        <v-text-field 
+                                            :rules="[v => !!v || 'Campo Valor Obrigatório']"
+                                            type="number"
+                                            v-model="produto.valor" 
+                                            label="Preço Unidade" 
+                                            placeholder="Preço Unidade" 
+                                            background-color="white"
+                                            prefix="$"
+                                            hide-details
+                                            outlined
+                                            min="0"
                                         />
                                     </div>
                                     <div v-if="produto.produto_id" class="col-12 div-input">
@@ -131,6 +150,7 @@
         produto: {
             produto_id: '',
             nome: '',
+            valor: '',
             ativo: '',
         },
         // variável para o cabeçalho da tabela
@@ -141,14 +161,22 @@
                 sortable: true,
             },
             {
+                value: 'valor',
+                text: 'Preço',
+                align: 'end',
+                sortable: true,
+            },
+            {
                 value: 'ativo',
                 text: 'Status',
+                align: 'end',
                 sortable: true,
             },
             {
                 value: 'acoes',
-                sortable: false,
                 text: 'Ações',
+                align: 'end',
+                sortable: false,
             },
         ],
         // variável para os filtros da tabela
@@ -174,7 +202,11 @@
                 let dados = {
                     // coleta o nome do produto
                     nome: this.produto.nome,
+                    // coleta o valor do produto 
+                    valor: this.produto.valor,
                 }
+                // formata o valor do produto
+                dados.valor = this.formatValue(dados.valor)
                 // caso ja exista um produto_id
                 if(this.produto.produto_id){
                     // coleta o status do produto
@@ -221,7 +253,10 @@
                 // atribui os dados do produto vindos do back à váriável local
                 this.produto.produto_id = await resp.data.product.id || ''
                 this.produto.nome = await resp.data.product.nome || ''
+                this.produto.valor = await resp.data.product.valor || ''
                 this.produto.ativo = await resp.data.product.ativo ? 'Ativo' : 'Inativo'
+                // formata o valor do produto
+                this.produto.valor = this.formatValue(this.produto.valor)
                 // mostra a modal de criar/editar o produto
                 this.createProduto()
             }else{
@@ -236,6 +271,15 @@
             this.loading = false
             // atualiza a tabela
             this.$refs.tabela.init()
+        },
+        // função para formatar o valor do produto
+        formatValue(valor){
+            // converte a vírgula em ponto, caso exista
+            let valor_formatado = valor.toString().replace(',', '.')
+            // converte o valor para float mantendo duas casas decimais
+            valor_formatado = parseFloat(valor_formatado).toFixed(2)
+            // retorna o valor
+            return  valor_formatado
         },
         // função que roda quando é fechada a modal de criar/editar o produto
         closeProduto(){
