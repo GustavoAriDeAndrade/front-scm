@@ -43,7 +43,7 @@ export default {
 					// url da rota do back para fazer a requisição
 					'/client' + 
 					// por qual coluna devem ser ordenados os registros
-					(filters.order_column ? ('?orderBy=' + filters.order_column) : '?orderBy=id') +
+					(filters.order_column ? ('?orderBy=' + filters.order_column) : '?orderBy=nome') +
 					// qual a ordem que deve ser ordenado (ASC ou DESC)
 					(filters.order_dir ? '&order=' + filters.order_dir : '&order=asc') +
 					// qual a quantidade de dados

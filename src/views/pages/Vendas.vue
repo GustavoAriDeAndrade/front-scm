@@ -32,6 +32,11 @@
                             :headers="headers"
                             :items="itens_carrinho"
                         >
+                            <template v-slot:[`item.valor`]="{ item }">
+                                <span>
+                                    R$ {{ item.valor }}
+                                </span>
+                            </template>
                             <template v-slot:top>
                                 <v-toolbar flat>
                                     <v-toolbar-title>Carrinho</v-toolbar-title>
@@ -72,6 +77,34 @@
                     <div class="col-4 div-input">
                         <v-text-field 
                             type="number"
+                            v-model="venda.valor_desconto" 
+                            label="Desconto" 
+                            placeholder="Desconto" 
+                            background-color="white"
+                            prefix="$"
+                            hide-details
+                            outlined
+                            min="0"
+                            @input="valorDesconto"
+                        />
+                    </div>
+                    <div class="col-4 div-input">
+                        <v-text-field 
+                            type="number"
+                            v-model="valor_restante" 
+                            label="Valor Restante" 
+                            placeholder="Valor Restante" 
+                            background-color="white"
+                            prefix="$"
+                            hide-details
+                            outlined
+                            min="0"
+                            disabled
+                        />
+                    </div>
+                    <div class="col-4 div-input">
+                        <v-text-field 
+                            type="number"
                             v-model="venda.valor_entrada" 
                             label="Valor Entrada" 
                             placeholder="Valor Entrada" 
@@ -99,20 +132,6 @@
                     <div class="col-4 div-input">
                         <v-text-field 
                             type="number"
-                            v-model="valor_restante" 
-                            label="Valor Restante" 
-                            placeholder="Valor Restante" 
-                            background-color="white"
-                            prefix="$"
-                            hide-details
-                            outlined
-                            min="0"
-                            disabled
-                        />
-                    </div>
-                    <div class="col-4 div-input">
-                        <v-text-field 
-                            type="number"
                             v-model="venda.quantidade_parcelas" 
                             label="Parcelas" 
                             placeholder="Parcelas" 
@@ -121,6 +140,17 @@
                             outlined
                             min="1"
                             @input="valorParcelas"
+                        />
+                    </div>
+                    <div class="col-4 div-input">
+                        <v-text-field 
+                            v-model="venda.data_parcela" 
+                            label="Primeira Parcela" 
+                            placeholder="Primeira Parcela" 
+                            background-color="white"
+                            v-mask="'##/##/####'"
+                            hide-details
+                            outlined
                         />
                     </div>
                     <div class="col-4 div-input">
@@ -135,17 +165,6 @@
                             outlined
                             min="0"
                             disabled
-                        />
-                    </div>
-                    <div class="col-4 div-input">
-                        <v-text-field 
-                            v-model="venda.data_parcela" 
-                            label="Primeira Parcela" 
-                            placeholder="Primeira Parcela" 
-                            background-color="white"
-                            v-mask="'##/##/####'"
-                            hide-details
-                            outlined
                         />
                     </div>
                     <div class="col-12 btn-finalizar">
@@ -237,18 +256,7 @@
                                             background-color="white"
                                             hide-details
                                             outlined
-                                        />
-                                    </div>
-                                    <div class="col-12 div-input">
-                                        <v-text-field 
-                                            type="number"
-                                            v-model="carrinho.quantidade" 
-                                            label="Quantidade" 
-                                            placeholder="Quantidade" 
-                                            background-color="white"
-                                            hide-details
-                                            outlined
-                                            min="1"
+                                            @change="atribuiValor"
                                         />
                                     </div>
                                     <div class="col-12 div-input">
@@ -261,7 +269,19 @@
                                             prefix="$"
                                             hide-details
                                             outlined
-                                            min="0"
+                                            disabled
+                                        />
+                                    </div>
+                                    <div class="col-12 div-input">
+                                        <v-text-field 
+                                            type="number"
+                                            v-model="carrinho.quantidade" 
+                                            label="Quantidade" 
+                                            placeholder="Quantidade" 
+                                            background-color="white"
+                                            hide-details
+                                            outlined
+                                            min="1"
                                         />
                                     </div>
                                 </div>
@@ -283,8 +303,11 @@
             <v-dialog v-model="dialog_remove_carrinho" max-width="500px">
                 <v-card>
                     <v-card-title class="text-h5">
-                        Você tem certeza que deseja remover esse item do carrinho?
+                        Remover Item
                     </v-card-title>
+                    <v-card-text>
+                        Você tem certeza que deseja remover o item {{ this.carrinho.nome }}, no valor de R$ {{ this.carrinho.valor }} do carrinho?
+                    </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="darken-1" text style="text-transform: capitalize; font-size: 16px;" @click="closeDelete">
@@ -349,6 +372,7 @@
                 usuario_id: '',
                 produtos: [],
                 valor_total: 0.00,
+                valor_desconto: 0.00,
                 valor_entrada: 0.00,
                 forma_pagamento_id: '',
                 quantidade_parcelas: 1,
@@ -509,7 +533,7 @@
                         cliente_id: this.venda.cliente_id.toString(),
                         usuario_id: this.venda.usuario_id.toString(),
                         produtos: this.venda.produtos,
-                        valor_total: parseFloat(this.venda.valor_total),
+                        valor_total: parseFloat(this.venda.valor_total) - parseFloat(this.venda.valor_desconto),
                         valor_entrada: parseFloat(this.venda.valor_entrada),
                         forma_pagamento_id: this.venda.forma_pagamento_id != '' ? this.venda.forma_pagamento_id.toString() : '',
                         quantidade_parcelas: parseInt(this.venda.quantidade_parcelas),
@@ -582,6 +606,15 @@
                 this.valorTotal()
                 // chama a função para fechar a modal de remoção
                 this.closeDelete()
+            },
+            // função para atribuir o valor do produto ao campo
+            atribuiValor(){
+                // buscamos os dados do produto que foi selecionado
+                let produto_busca = this.produtos.find(produto => produto.id === this.carrinho.produto_id)
+                // formata o valor antes de atribuir ao campo
+                let valor =this.formatValue(produto_busca.valor)
+                // atribuimos o valor do produto
+                this.carrinho.valor = valor
             },
             // função para salvar um produto
             salvarProduto(){
@@ -695,12 +728,38 @@
                 // atualiza o valor das parcelas
                 this.valorParcelas()
             },
+            // caso o uusário resolva dar um desconto ao cliente
+            valorDesconto(){
+                // verifica se o valor de entrada é válido
+                if(parseFloat(this.venda.valor_desconto) <= parseFloat(this.venda.valor_total)){
+                    // atribui o novo valor restante para pagamento
+                    this.valor_restante = parseFloat(this.venda.valor_total) - parseFloat(this.venda.valor_desconto)
+                    // atualiza o valor das parcelas
+                    this.valorParcelas()
+                // caso o valor de entrada seja inválido
+                }else{
+                    // atribui o título da mensagem 
+                    this.resposta.titulo = 'Atenção!'
+                    // atribui o corpo da mensagem 
+                    this.resposta.mensagem = 'O desconto não pode ser maior que o valor total!'
+                    // mostra a mensagem
+                    this.dialog_resposta = true
+                    // reseta a variável
+                    this.venda.valor_desconto = 0.00
+                    // corrigi o valor restante
+                    this.valor_restante = this.venda.valor_total
+                    // formata o valor restante
+                    this.valor_restante = this.formatValue(this.valor_restante)
+                    // corrigi o valor das parcelas
+                    this.venda.valor_parcelas = this.venda.valor_total
+                }
+            },
             // caso o cliente resolva dar um valor de entrada na compra
             valorEntrada(){
                 // verifica se o valor de entrada é válido
                 if(parseFloat(this.venda.valor_entrada) <= parseFloat(this.venda.valor_total)){
                     // atribui o novo valor restante para pagamento
-                    this.valor_restante = parseFloat(this.venda.valor_total) - parseFloat(this.venda.valor_entrada)
+                    this.valor_restante = parseFloat(this.venda.valor_total) - parseFloat(this.venda.valor_entrada) - parseFloat(this.venda.valor_desconto)
                     // atualiza o valor das parcelas
                     this.valorParcelas()
                 // caso o valor de entrada seja inválido
@@ -715,6 +774,8 @@
                     this.venda.valor_entrada = 0.00
                     // corrigi o valor restante
                     this.valor_restante = this.venda.valor_total
+                    // formata o valor restante
+                    this.valor_restante = this.formatValue(this.valor_restante)
                     // corrigi o valor das parcelas
                     this.venda.valor_parcelas = this.venda.valor_total
                 }
@@ -726,8 +787,14 @@
                     // caso seja inválido, tornamos válido
                     this.venda.quantidade_parcelas = 1
                 }
-                // realiza o cálculo
+                // realiza o calculo
                 this.venda.valor_parcelas = parseFloat(this.valor_restante) / parseInt(this.venda.quantidade_parcelas)
+                // formata o valor total
+                this.venda.valor_total = this.formatValue(this.venda.valor_total)
+                // formata o valor das parcelas
+                this.venda.valor_parcelas = this.formatValue(this.venda.valor_parcelas)
+                // formata o valor restante
+                this.valor_restante = this.formatValue(this.valor_restante)
             },
 			// função para fechar a modal de cliente
 			closeCliente(){
@@ -778,6 +845,15 @@
                 this.itens_carrinho = [],
                 // zera o valor restante
                 this.valor_restante = 0.00
+            },
+            // função para formatar o valor do produto
+            formatValue(valor){
+                // converte a vírgula em ponto, caso exista
+                let valor_formatado = valor.toString().replace(',', '.')
+                // converte o valor para float mantendo duas casas decimais
+                valor_formatado = parseFloat(valor_formatado).toFixed(2)
+                // retorna o valor
+                return  valor_formatado
             },
         },
 		// funções que rodam quando o componente é montado
