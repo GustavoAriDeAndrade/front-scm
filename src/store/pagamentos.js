@@ -83,6 +83,22 @@ export default {
             // retorna a resposta da requisição
             return resp
         },
+        
+        /**
+         * função para coletar os pagamentos pendentes de um cliente
+         * @param {*} param0
+         * @param {*} cliente_id
+         */
+        async getPagamentos({ commit }, cliente_id) {
+            // seta o status do store de venda para loading
+            await commit ('SET_STATUS', 'loading')
+            // faz uma requisição para o back e coleta o resultado na variavel resp
+            const resp = await API.get('/sale/salesClient/' + cliente_id)
+            // seta o status do store de venda para vazio
+            await commit('SET_STATUS', '')
+            // retorna a resposta da requisição
+            return resp
+        },
 
         /**
          * Função para editar uma venda
@@ -99,6 +115,21 @@ export default {
             // retorna a resposta da requisição
             return resp
         },
+		/**
+		 * função para quitar uma compra
+		 * @param {*} param0 
+		 * @param {*} date_update 
+		 */
+		async quitarCompra({ commit }, date_update) {
+			// seta o status do store para loading
+			await commit('SET_STATUS', 'loading')
+			// faz uma requisição para o back e coleta o resultado na variavel resp
+			const resp = await API.put('/sale/quitarCompra/' + date_update.id,)
+			// seta o status do store de venda para vazio 
+			await commit('SET_STATUS', '')
+			// retorna a resposta da requisição
+			return resp
+		},
     },
     // funções para coletar o estado do store de pagamentos
     getters: {
