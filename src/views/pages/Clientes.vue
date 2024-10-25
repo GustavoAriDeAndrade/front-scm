@@ -34,7 +34,11 @@
 				</template>
 				<!-- botões para ativação das modais presentes na tabela -->
 				<template v-slot:acoes="{ item }">
-					<v-btn class="primary-button" raised small @click="editarCliente(item.id)">
+					<v-btn class="primary-button" raised small @click="visualizarPagamentos(item.id)">
+						<i class="fas fa-money-bill-wave-alt"></i>
+						Pagamentos
+					</v-btn>
+					<v-btn class="primary-button" raised small @click="editarCliente(item.id)" style="margin-left: 5px;">
 						<i class="fas fa-cog"></i>
 						Editar
 					</v-btn>
@@ -147,6 +151,75 @@
 					</v-card-actions>
 				</v-card>
 			</v-dialog>
+            <!-- modal para quitar uma venda -->
+            <v-dialog v-model="dialog_pagamentos" persistent max-width="850px">
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">{{ pagamentos.cliente }}</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-form ref="form_venda">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h2>Compras pendentes</h2>
+                                        <!-- tabela dos produtos da compra -->
+                                        <v-data-table
+                                            :headers="header_compras"
+                                            :items="pagamentos.compras"
+                                            style="margin-top: 10px;"
+                                        >
+                                            <template v-slot:[`item.valor_total`]="{ item }">
+                                                <span>
+                                                    R$ {{ item.valor_total }}
+                                                </span>
+                                            </template>
+                                            <template v-slot:[`item.valor_restante`]="{ item }">
+                                                <span>
+                                                    R$ {{ item.valor_restante }}
+                                                </span>
+                                            </template>
+                                            <template v-slot:[`item.actions`]="{ item }">
+                                                <v-btn class="primary-button" raised small @click="quitarCompra(item.venda_id)">
+                                                	<i class="fas fa-check"></i>
+                                                </v-btn>
+                                            </template>
+                                        </v-data-table>
+                                    </div>
+                                </div>
+                            </v-form>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="darken-1" text style="text-transform: capitalize; font-size: 16px;" @click="closePagamento">
+                            Fechar
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+            <!-- modal para conclusão da quitação -->
+            <v-dialog v-model="dialog_prosseguir" persistent max-width="450px">
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">Atenção</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container style="text-align: center;">
+                            <h3>Deseja quitar essa compra?</h3><br>
+                        </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="darken-1" text style="text-transform: capitalize; font-size: 16px;" @click="closePagamento">
+                            Não
+                        </v-btn>
+                        <v-btn class="primary-button" small @click="quitar">
+                            Pagar
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
 			<DialogMensagem :visible="dialog_resposta" :mensagem="resposta" @close="dialog_resposta=false"/>
 			<Loader v-if="loading"/>
 		</div>
@@ -180,6 +253,10 @@
 		data: () => ({
 			// variável para mostrar a modal para editar/criar um cliente
 			dialog_cliente: false,
+			// variável para mostrar a modal para vizualizar compras do cliente
+			dialog_pagamentos: false,
+			// variável para mostrar a modadl de confirmação da quitação
+			dialog_prosseguir: false,
 			// variável para mostrar a modal de informação
 			dialog_resposta: false,
 			// variável para a mensagem de resposta
@@ -196,6 +273,12 @@
 				rua: '',
 				numero: '',
 				ativo: '',
+			},
+			// variável para quitar uma venda
+			pagamentos:{
+				cliente: '',
+				venda_id: '',
+				compras: []
 			},
 			// variável para o cabeçalho da tabela
 			headers: [
@@ -225,6 +308,35 @@
 					text: 'Ações',
 				},
 			],
+            // variável para tabela das compras
+            header_compras: [
+                {
+                    text: 'Valor Total',
+                    value: 'valor_total',
+                    align: 'end',
+                },
+                { 
+                    text: 'Total Parcelas', 
+                    value: 'total_parcelas', 
+                    align: 'end',
+                },
+                {
+                    text: 'Valor Restante',
+                    value: 'valor_restante',
+                    align: 'end',
+                },
+                { 
+                    text: 'Parcelas Restantes', 
+                    value: 'parcelas_restante', 
+                    align: 'end',
+                },
+                { 
+                    text: 'Quitar', 
+                    value: 'actions',
+                    align: 'end', 
+                    sortable: false 
+                },
+            ],
 			// variável para os filtros da tabela
 			filtros: {
 				perPage: 20,
@@ -295,6 +407,72 @@
 					this.$refs.tabela.init()
 				}
 			},
+			// função para quitar a compra
+			async quitar(){
+				let resp = {}
+				// caso os campos do formulário estejam válidos
+				if(this.pagamentos.venda_id != ''){
+					// coloca o componente como loading
+					this.loading = true
+					// armazena os dados para realizar a atualização
+					let date_update = {
+						id: this.pagamentos.venda_id
+					}
+					// rota para a atualização dos dados do cliente
+					resp = await store.dispatch('quitarCompra', date_update)
+					// caso algo tenha dado errado
+					if(resp.status != 200 && resp.status != 201){
+						// atribui o título da mensagem 
+						this.resposta.titulo = 'Algo deu errado!'
+						// atribui o corpo da mensagem 
+						this.resposta.mensagem = await resp.data.message || resp.data.error
+						// mostra a mensagem
+						this.dialog_resposta = true
+					// caso tenha dado tudo certo
+					}else{
+						// fecha a modal de quitação
+						this.closePagamento()
+					}
+					// retira o loading do componente
+					this.loading = false
+				}
+			},
+			// função para coletar as compras pendentes de pagamento do cliente 
+			async visualizarPagamentos(cliente_id){
+				// coloca o componente como loading
+				this.loading = true
+				// requisita as compras pendentes de pagamento do cliente 
+				var resp = await store.dispatch('getPagamentos', cliente_id)
+				// caso o status da resposta seja 200 (deu certo)
+				if(resp.status == 200){
+					// caso o cliente possua compras pendentes
+					if(resp.data.sales.length > 0){
+						// atribui os dados das compras
+						this.pagamentos.cliente = await resp.data.sales[0].cliente || ''
+						this.pagamentos.compras = await resp.data.sales || []
+						// abre a modal de compras
+						this.dialog_pagamentos = true
+					// caso todas as suas compras já estejam quitadas
+					}else{
+						// atribui o título da mensagem
+						this.resposta.titulo = 'Atenção!'
+						// atribui o corpo da mensagem
+						this.resposta.mensagem = 'Esse cliente não possui compras com pagamento em aberto'
+						// mostra a mensagem
+						this.dialog_resposta = true 
+					}
+				// caso algo tenha dado errado
+				}else{
+					// atribui o título da mensagem
+					this.resposta.titulo = 'Algo deu errado!'
+					// atribui o corpo da mensagem
+					this.resposta.mensagem = await resp.data.message || resp.data.error
+					// mostra a mensagem
+					this.dialog_resposta = true 
+				}
+				// retira o loading do componente
+				this.loading = false
+			},
 			// função para coletar um cliente para editar
 			async editarCliente(cliente_id){
 				// coloca o componente como loading
@@ -327,6 +505,13 @@
 				// atualiza a tabela
 				this.$refs.tabela.init()
 			},
+			// função para abrir a modal de confirmação da quitação
+			quitarCompra(venda_id){
+				// atribui a venda a variável
+				this.pagamentos.venda_id = venda_id
+				// mostra a modal
+				this.dialog_prosseguir = true
+			},
 			// função que roda quando é fechada a modal de create/edit cliente
 			closeCliente(){
 				// fecha a modal
@@ -340,6 +525,19 @@
 					observacao: '',
 					rua: '',
 					numero: '',
+				}
+			},
+			// função para fechar a modal com as compras do cliente
+			closePagamento(){
+				// fecha a modal
+				this.dialog_pagamentos = false
+				// fecha a modal 
+				this.dialog_prosseguir = false
+				// limpa os dados locais
+				this.pagamentos = {
+					cliente: '',
+					venda_id: '',
+					compras: []
 				}
 			},
 		},
