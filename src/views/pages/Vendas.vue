@@ -167,7 +167,13 @@
                             disabled
                         />
                     </div>
-                    <div class="col-12 btn-finalizar">
+                    <div class="col-6 btn-cancelar">
+                        <!-- botão para finalizar a compra -->
+                        <v-btn class="primary-button" raised @click="cleanCaixa">
+                            Cancelar Compra
+                        </v-btn>
+                    </div>
+                    <div class="col-6 btn-finalizar">
                         <!-- botão para finalizar a compra -->
                         <v-btn class="primary-button" raised @click="finalizarCompra">
                             Finalizar Compra
@@ -900,8 +906,12 @@
             padding: 20px;
             text-align: center;
         }
+        .btn-cancelar{
+            text-align: right;
+            margin-top: 15px;
+        }
         .btn-finalizar{
-            text-align: center;
+            text-align: left;
             margin-top: 15px;
         }
     }

@@ -35,7 +35,7 @@ export default {
          * @param {*} param0
          * @param {*} filters
          */
-        async getVendas({ commit }, filters) {
+        async getVendas({ commit }, filters){
             // seta o status do store para loading
             await commit('SET_STATUS', 'loading')
             // faz a requisição para o back
@@ -51,7 +51,11 @@ export default {
                 // qual a página
                 (filters.page ? '&page=' + filters.page + '&_embed=false' : '&_embed=true') +
                 // os registros que contém a busca solicitada
-                (filters.search ? '&search=' + filters.search : ''),
+                (filters.search ? '&search=' + filters.search : '') +
+                // os registros que contém o cliente solicitado
+                (filters.adicionais.cliente_id ? '&cliente_id=' + filters.adicionais.cliente_id : '') +
+                // os registros que contém o status solicitado
+                (filters.adicionais.status ? '&status=' + filters.adicionais.status : ''),
             )
             // seta o status para vazio
             await commit('SET_STATUS', '')

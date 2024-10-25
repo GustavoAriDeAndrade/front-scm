@@ -2,9 +2,39 @@
 <template>
     <div id="vendas">
         <div class="tabela-vendas">
-            <!-- botão para abrir a modal-->
-            <div class="col-12 novo-venda">
-                
+            <!-- Filtros -->
+            <div class="col-12 filtros">
+                <div class="row row-filtros">
+                    <!-- filtros para os gráficos -->
+                    <div class="col-12 selects">
+                        <v-form ref="form_selects">
+                            <v-icon>fas fa-filter</v-icon>
+                            <v-select
+                                :items="clientes"
+                                item-text="nome" 
+                                item-value="id"
+                                v-model="filtros.cliente_id" 
+                                label="Cliente"
+                                placeholder="Cliente" 
+                                background-color="white"
+                                hide-details
+                                outlined
+                            />
+                            <v-select
+                                :items="status_filtro"
+                                item-text="nome" 
+                                item-value="valor"
+                                v-model="filtros.status" 
+                                label="Status"
+                                placeholder="Status" 
+                                background-color="white"
+                                hide-details
+                                outlined
+                            />
+                            <v-btn class="primary-button" raised small @click="searchFiltro">Filtrar</v-btn>
+                        </v-form>
+                    </div>
+                </div>
             </div>
             <!-- tabela que ira conter os vendas cadastrados -->
             <CustomTable
@@ -137,7 +167,7 @@
                                                 </span>
                                             </template>
                                             <template v-slot:[`item.acoes`]="{ item }">
-                                                <v-btn v-if="item.paga == false" class="success-button" raised small @click="pagarParcela(item)">
+                                                <v-btn v-if="item.pagar == true" class="success-button" raised small @click="pagarParcela(item)">
                                                     <i class="fas fa-check"></i>
                                                 </v-btn>
                                             </template>
@@ -263,6 +293,19 @@
         loading: false,
         // variável para armazenar as formas de pagamento
         formas_pagamento: [],
+        // variável para armazenar os clientes
+        clientes: [],
+        // variável para armazenar os status para filtro
+        status_filtro: [
+            {
+                nome: 'Pendente Pagamento',
+                valor: false
+            },
+            {
+                nome: 'Quitado',
+                valor: true
+            }
+        ],
         // variáveis para visualizar uma venda
         venda: {
             venda_id: '',
@@ -316,11 +359,13 @@
             {
                 value: 'valor_unidade',
                 text: 'Valor Unidade',
+                align: 'end',
                 sortable: true,
             },
             {
                 value: 'quantidade',
                 text: 'Quantidade',
+                align: 'end',
                 sortable: true,
             },
         ],
@@ -334,32 +379,39 @@
             {
                 value: 'valor',
                 text: 'Valor',
+                align: 'end',
                 sortable: true,
             },
             {
                 value: 'valor_restante',
                 text: 'Valor Restante',
+                align: 'end',
                 sortable: true,
             },
             {
                 value: 'data_vencimento',
                 text: 'Data Vencimento',
+                align: 'end',
                 sortable: true,
             },
             {
                 value: 'data_pagamento',
                 text: 'Data Pagamento',
+                align: 'end',
                 sortable: true,
             },
             {
                 value: 'acoes',
-                sortable: false,
                 text: 'Pagar',
+                align: 'end',
+                sortable: false,
             },
         ],
         // variável para os filtros da tabela
         filtros: {
             perPage: 20,
+            cliente_id: '',
+            status: false,
         },
     }),
     // funções deste componente
@@ -368,11 +420,8 @@
         async init(){
             // buscamos as formas de pagamento cadastradas
             this.getFormasPagamento()
-        },
-        // função para abrir a modal de cadastro/edição de venda
-        async createVenda(){
-            // abre a modal de vendas
-            this.dialog_venda = true
+            // buscamos os clientes cadastrados
+            this.getClientes()
         },
         // função para pegar as formas de pagamento
         async getFormasPagamento(){
@@ -384,6 +433,21 @@
                 this.formas_pagamento = await resp.data.types
             }
         },	
+        // função para pegar os clientes
+        async getClientes(){
+            // faz um dispatch para uma action no vuex para pegar os clientes
+            let resp = await store.dispatch('getClientesSelect')
+            // caso o status seja 200 (deu certo)
+            if(resp.status == 200){
+                // atribui os dados à variável local
+                this.clientes = await resp.data.clients
+            }
+        },	
+        // função de filtro do nosso relatório
+        async searchFiltro(){
+            // atualiza a tabela
+            this.$refs.tabela.init()
+        },
         // função para enviar o pagamento de uma parcela
         async enviarPagamento(){
             let resp = {}
@@ -450,8 +514,14 @@
                 this.venda.caixa = await resp.data.sale.user.nome || ''
                 this.venda.produtos = await resp.data.sale.products || []
                 this.venda.parcelas = await resp.data.sale.payments || []
-                // mostra a modal de criar/editar o venda
-                this.createVenda()
+                // formatamos o valor total
+                this.venda.valor_total = this.formatValue(this.venda.valor_total)
+                // formatamos o valor dos produtos
+                this.venda.produtos = this.formataProdutos(this.venda.produtos)
+                // ajeitamos as parcelas
+                this.venda.parcelas = this.verificaParcelas(this.venda.parcelas)
+                // abre a modal de vendas
+                this.dialog_venda = true
             }else{
                 // atribui o título da mensagem
                 this.resposta.titulo = 'Algo deu errado!'
@@ -537,6 +607,50 @@
             // atualiza os dados dessa compra
             this.visualizarVenda(venda_id)
         },
+        // função para formatar o valor dos produtos
+        formataProdutos(produtos){
+            // percorremos os produtos
+            for(let i = 0; i < produtos.length; i++){
+                // formatamos o produto atual
+                produtos[i].valor_unidade = this.formatValue(produtos[i].valor_unidade)
+            }
+            // retornamos os produtos
+            return produtos
+        },
+        // função para exibir o botão apenas para a parcela da vez
+        verificaParcelas(parcelas){
+            // varíavel de verificação
+            let pagar = false
+            // percorre as parcelas
+            for(let i = 0; i < parcelas.length; i++){
+                // caso a parcela não tenha sido paga e ainda estejamos buscando
+                if(parcelas[i].paga == false && pagar == false){
+                    // marcamos para exibir o botão
+                    parcelas[i].pagar = true
+                    // setamos a variável
+                    pagar = true
+                // caso contrário
+                }else{
+                    // marcamos para não exibir o botão
+                    parcelas[i].pagar = false
+                }
+                // formatamos o valor da parcela
+                parcelas[i].valor = this.formatValue(parcelas[i].valor)
+                // formatamos o valor restante da parcelas
+                parcelas[i].valor_restante = parcelas[i].valor_restante > 0 ? this.formatValue(parcelas[i].valor_restante) : 0
+            }
+            // retornamos as parcelas
+            return parcelas
+        },
+        // função para formatar o valor da parcela
+        formatValue(valor){
+            // converte o valor para float mantendo duas casas decimais
+            let valor_formatado = parseFloat(valor).toFixed(2)
+            // converte a vírgula em ponto, caso exista
+            valor_formatado = valor_formatado.toString().replace(',', '.')
+            // retorna o valor
+            return  valor_formatado
+        },
         // função que roda quando é fechada a modal de criar/editar o venda
         closePagamento(){
             // fecha a modal
@@ -578,19 +692,44 @@
         background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
         background-size: cover;
         min-height: 100vh;
-        .tabela-vendas {
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.9); /* Torna o fundo branco mais transparente */
-            border-radius: 10px;
-            .novo-venda {
-                display: flex;
-                justify-content: flex-end;
+        .filtros{
+            padding-bottom: 0;
+            .titulo{
                 padding-bottom: 0;
-                button {
-                    i, svg {
-                        margin-right: 10px;
+                p{
+                    color: #11263C;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 58px;
+
+                    svg{
+                        font-size: 19px;
+                        margin: 0 4px;
+                        color: #040d16;
                     }
-                    text-transform: capitalize;
+                    span{
+                        font-weight: 500;
+                        color: #D0D1D2;
+                    }
+                }
+            }
+            .selects{
+                form{
+                    display: flex;
+                    flex-wrap: nowrap;
+                    justify-content: space-between;
+                    align-items: center;
+                    svg{
+                        font-size: 15px;
+                        color: #3b3c3c;
+                    }
+                    .v-input{
+                        display: flex;
+                        flex-wrap: nowrap;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0 10px;
+                    }
                 }
             }
         }
