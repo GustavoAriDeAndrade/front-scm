@@ -223,7 +223,7 @@ custom table
 			.btn-opcoes-headers{
 				position: relative;
 				.btn-only-icon{
-					background-color: rgba(201, 163, 200, 0.87) !important;
+					background-color: #F0E5E7;
 				}
 				.sub-menu-headers{
 					min-width: 310px;
@@ -238,7 +238,7 @@ custom table
 					flex-direction: column;
 					z-index: 1;
 					.btn-exportar{
-						background-color: rgba(201, 163, 200, 0.87);
+						background-color: #F0E5E7;
 					}
 					.span-titulo-submenu{
 						text-align: center;
@@ -376,7 +376,7 @@ custom table
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					background: rgba(155, 115, 153, 0.87);
+					background: #F0E5E7;
 					border: 1px solid #C8C8C8;
 					border-radius: 0 30px 30px 0 ;
 					width: 60px;
@@ -389,7 +389,7 @@ custom table
 						width: 45px;
 						margin: 0;
 						z-index: 1;
-						color: #fff;
+						color: #4B484B;
 					}
 				}
 			}
