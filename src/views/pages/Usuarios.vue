@@ -2,6 +2,9 @@
 <template>
 	<div id="usuarios">
 		<div class="tabela-usuario">
+			<div class="col-3 titulo">
+				<p>Usuários <v-icon>fas fa-users</v-icon></p>
+			</div>
 			<div class="col-12 novo-usuario">
 				<!-- botão para ativação da modal -->
 				<v-btn class="primary-button" raised @click="createUser">
@@ -358,7 +361,7 @@
 		max-height: 100%;
 		padding: 24px;
 		flex-wrap: wrap;
-		background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+		background-color: #FFFFFF;
 		background-size: cover;
 		min-height: 100vh;
 		
@@ -367,7 +370,6 @@
 			background-color: #fff;
     		border-radius: 10px;
 			.novo-usuario{
-				display: flex;
 				justify-content: flex-end;
 				padding-bottom: 0;
 				button{
