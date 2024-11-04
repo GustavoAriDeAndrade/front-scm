@@ -1,12 +1,12 @@
 <template>
     <div id="caixa">
         <div class="campos">
+            <div class="col-3 titulo">
+                <p>Vendas <v-icon>fas fa-store</v-icon></p>
+            </div>
             <div class="col-12 filtros">
-                <div class="col-3 titulo">
-                    <p>VENDAS <v-icon>fas fa-store</v-icon></p>
-                </div>
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-5">
                         <v-autocomplete
                             :items="clientes"
                             item-text="nome" 
@@ -19,13 +19,12 @@
                             outlined
                         />
                     </div>
-                    <div class="col-4 btn-cliente">
-                        <!-- botão para cadastro de cliente -->
-                        <v-btn class="primary-button" raised @click="dialog_cliente = true">
-                            Novo Cliente
-                            <i class="fas fa-user-plus" style="margin-left: 4px;"></i> 
+                    <div class="col-3 novo-produto">
+                        <v-btn class="primary-button" raised @click="dialog_carrinho = true">
+                            Adicionar Produto ao Carrinho
+                            <i class="fas fa-plus" style="margin-left: 4px;"></i> 
                         </v-btn>
-                    </div>
+			        </div>
                     <div class="col-12">
                         <!-- tabela para gerenciamento dos produtos da compra -->
                         <v-data-table
@@ -36,22 +35,6 @@
                                 <span>
                                     R$ {{ item.valor }}
                                 </span>
-                            </template>
-                            <template v-slot:top>
-                                <v-toolbar flat>
-                                    <v-toolbar-title>Carrinho</v-toolbar-title>
-                                    <v-divider
-                                        class="mx-4"
-                                        inset
-                                        vertical
-                                    ></v-divider>
-                                    <v-spacer></v-spacer>
-                                    <!-- botão para adicionar produto ao carrinho -->
-                                    <v-btn class="primary-button" raised @click="dialog_carrinho = true">
-                                        Adicionar Produto ao Carrinho
-                                        <i class="fas fa-plus" style="margin-left: 4px;"></i> 
-                                    </v-btn>
-                                </v-toolbar>
                             </template>
                             <!-- botões para ações nos itens do carrinho -->
                             <template v-slot:[`item.actions`]="{ item }">
@@ -875,32 +858,17 @@
 		max-height: 100%;
 		padding: 24px;
 		flex-wrap: wrap;
-        background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+        background-color: #FFFFFF;
         background-size: cover;
+        .novo-produto{
+            margin-top: 10px;
+        }
 
         .campos{
 			background-color: #fff;
 			border-radius: 10px;
 			width: 100%;
-            .titulo{
-                padding-bottom: 0;
-                p{
-                    color: #11263C;
-                    font-weight: 500;
-                    font-size: 20px;
-                    line-height: 58px;
-
-                    svg{
-                        font-size: 19px;
-                        margin: 0 4px;
-                        color: #040d16;
-                    }
-                    span{
-                        font-weight: 500;
-                        color: #D0D1D2;
-                    }
-                }
-            }
+            
         }
         .btn-cliente{
             padding: 20px;

@@ -2,14 +2,15 @@
 <template>
 	<div id="clientes">
 		<div class="tabela-cliente">
+			<div class="col-3 titulo">
+				<p>Clientes <v-icon>fas fa-user-friends</v-icon></p>
+			</div>
 			<div class="col-12 novo-cliente">
-				<!-- botão para ativação da modal -->
 				<v-btn class="primary-button" raised @click="createCliente">
 					<i class="fas fa-user-plus"></i> 
 					Novo Cliente
 				</v-btn>
 			</div>
-			<!-- tabela que ira conter as informações de cada cliente -->
 			<CustomTable 
 				v-if="headers != ''"
 				:action="'getClientes'"
@@ -547,12 +548,12 @@
 </script>
 <!-- scss do front -->
 <style lang="scss">
-	#clientes { /* Ajuste para a classe correta */
+	#clientes { 
 		display: flex;
 		max-height: 100%;
 		padding: 24px;
 		flex-wrap: wrap;
-		background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+		background-color: #FFFFFF;
 		background-size: cover;
 		min-height: 100vh;
 	}
@@ -562,7 +563,6 @@
 		background-color: #fff;
 		border-radius: 10px;
 		.novo-cliente {
-			display: flex;
 			justify-content: flex-end;
 			padding-bottom: 0;
 			button {

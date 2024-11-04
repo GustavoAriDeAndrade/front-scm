@@ -59,7 +59,7 @@ export default {
   justify-content: center;
   min-height: 100vh;
   padding: 24px;
-  background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+  background-color: #FFFFFF;
   background-size: cover;
 
   .button-row {

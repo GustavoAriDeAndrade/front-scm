@@ -2,6 +2,9 @@
 <template>
     <div id="vendas">
         <div class="tabela-vendas">
+            <div class="col-3 titulo">
+				<p>Pagamentos <v-icon>fas fa-money-bill-wave-alt</v-icon></p>
+			</div>
             <!-- Filtros -->
             <div class="col-12 filtros">
                 <div class="row row-filtros">
@@ -689,30 +692,12 @@
         max-height: 100%;
         padding: 24px;
         flex-wrap: wrap;
-        background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+        background-color: #FFFFFF;
         background-size: cover;
         min-height: 100vh;
         .filtros{
             padding-bottom: 0;
-            .titulo{
-                padding-bottom: 0;
-                p{
-                    color: #11263C;
-                    font-weight: 500;
-                    font-size: 14px;
-                    line-height: 58px;
-
-                    svg{
-                        font-size: 19px;
-                        margin: 0 4px;
-                        color: #040d16;
-                    }
-                    span{
-                        font-weight: 500;
-                        color: #D0D1D2;
-                    }
-                }
-            }
+           
             .selects{
                 form{
                     display: flex;

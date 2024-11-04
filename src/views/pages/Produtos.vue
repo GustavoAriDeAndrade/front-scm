@@ -2,6 +2,9 @@
 <template>
     <div id="produtos">
         <div class="tabela-produtos">
+            <div class="col-3 titulo">
+				<p>Produtos <v-icon>fas fa-tshirt</v-icon></p>
+			</div>
             <!-- botão para abrir a modal-->
             <div class="col-12 novo-produto">
                 <v-btn class="primary-button" raised @click="createProduto">
@@ -302,7 +305,7 @@
         max-height: 100%;
         padding: 24px;
         flex-wrap: wrap;
-        background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+        background-color: #FFFFFF;
         background-size: cover;
         min-height: 100vh;
         .tabela-produtos {
@@ -310,7 +313,6 @@
             background-color: #fff;
             border-radius: 10px;
             .novo-produto {
-                display: flex;
                 justify-content: flex-end;
                 padding-bottom: 0;
                 button {
