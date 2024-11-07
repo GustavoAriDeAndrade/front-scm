@@ -466,7 +466,7 @@
                     // coleta a forma de pagamento
                     metodo_pagamento_id: this.pagamento.forma_pagamento_id,
                     // coleta se a parcela foi quitada
-                    paga: this.pagamento.valor == this.pagamento.valor_pago ? true : false,
+                    paga: parseFloat(this.pagamento.valor) == parseFloat(this.pagamento.valor_pago) ? true : false,
                     // coleta a data que está sendo paga a parcela
                     data_pagamento: moment().format('YYYY-MM-DD HH:mm:ss')
                 }
