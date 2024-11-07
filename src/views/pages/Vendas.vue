@@ -2,8 +2,12 @@
     <div id="caixa">
         <div class="campos">
             <div class="col-3 titulo">
-                <p>Vendas <v-icon>fas fa-store</v-icon></p>
+                <p>
+                    Vendas
+                    <v-icon class="fas fa-store" style="font-size: 20px;"></v-icon>
+                </p>
             </div>
+
             <div class="col-12 filtros">
                 <div class="row">
                     <div class="col-5">
@@ -38,9 +42,34 @@
                             </template>
                             <!-- botões para ações nos itens do carrinho -->
                             <template v-slot:[`item.actions`]="{ item }">
-                                <v-icon class="me-2" size="small" @click="editarProduto(item)">mdi-pencil</v-icon>
-                                <v-icon size="small" @click="removerProduto(item)">mdi-delete</v-icon>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+                                    <v-icon 
+                                        class="me-2" 
+                                        size="small" 
+                                        @click="editarProduto(item)" 
+                                        v-on="on"
+                                    >
+                                        mdi-pencil
+                                    </v-icon>
+                                    </template>
+                                    <span>Editar produto</span>
+                                </v-tooltip>
+
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+                                    <v-icon 
+                                        size="small" 
+                                        @click="removerProduto(item)" 
+                                        v-on="on"
+                                    >
+                                        mdi-delete
+                                    </v-icon>
+                                    </template>
+                                    <span>Remover produto</span>
+                                </v-tooltip>
                             </template>
+
                         </v-data-table>
                     </div>
                     <div class="col-4 div-input">

@@ -183,9 +183,8 @@
 							box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
 						}
 						.page-content{
-							background-color: #ffff;
+							background-color: #ffffff;
 							flex: 1;
-							border-left: 1px solid var(--primary-color);
 							// padding: 24px;
 							@media (max-width: 767px) {
 								max-width: 100vw;

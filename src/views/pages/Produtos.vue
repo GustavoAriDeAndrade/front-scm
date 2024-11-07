@@ -3,14 +3,22 @@
     <div id="produtos">
         <div class="tabela-produtos">
             <div class="col-3 titulo">
-				<p>Produtos <v-icon>fas fa-tshirt</v-icon></p>
-			</div>
+                <p>
+                    Produtos
+                    <v-icon class="fas fa-tshirt" style="font-size: 20px;"></v-icon>
+                </p>
+            </div>
+
             <!-- botão para abrir a modal-->
-            <div class="col-12 novo-produto">
-                <v-btn class="primary-button" raised @click="createProduto">
-                    <i class="fas fa-plus"></i>
-                    Novo Produto
-                </v-btn>
+             <div class="col-12 novo-produto">
+                    <v-btn
+                        class="primary-button"
+                        raised
+                        @click="createProduto"
+                    >
+                <i class="fas fa-plus"></i>
+                Novo Produto
+            </v-btn>
             </div>
             <!-- tabela que ira conter os produtos cadastrados -->
             <CustomTable
@@ -30,22 +38,38 @@
                         R$ {{ item.valor }}
                     </span>
                 </template>
-                <template v-slot:ativo="{ item }">
-                    <span v-if="item.ativo">
-                        Ativo
-                        <img src="./../../assets/images/icon-ativo.png">
-                    </span>
-                    <span v-else>
-                        Inativo
-                        <img src="./../../assets/images/icon-inativo.png">
-                    </span>
+                <template v-slot:ativo="{ item }"> 
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                        <span v-on="on">
+                            <span v-if="item.ativo">
+                            <img src="./../../assets/images/icon-ativo.png">
+                            </span>
+                            <span v-else>
+                            <img src="./../../assets/images/icon-inativo.png">
+                            </span>
+                        </span>
+                        </template>
+                        <span v-if="item.ativo">Produto ativo</span>
+                        <span v-else>Produto inativo</span>
+                    </v-tooltip>
                 </template>
                 <!-- botões para ativação das modais presentes na tabela -->
                 <template v-slot:acoes="{ item }">
-                    <v-btn class="primary-button" raised small @click="editarProduto(item.id)">
-                        <i class="fas fa-cog"></i>
-                        Editar
-                    </v-btn>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                        <v-btn 
+                            class="primary-button" 
+                            raised 
+                            small 
+                            @click="editarProduto(item.id)" 
+                            v-on="on"
+                        >
+                            <i class="fas fa-cog"></i>
+                        </v-btn>
+                        </template>
+                        <span>Editar produto</span>
+                    </v-tooltip>
                 </template>
             </CustomTable>
             <!-- modal para cadastro e edição de um produto-->

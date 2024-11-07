@@ -337,7 +337,7 @@
 
 	<style lang="scss">
 		#nav-bar{
-			background-color:  #f0e5e7;
+			background-color:  #FEFAEF;
 	;
 			.nav-bar-row{
 				display: flex;

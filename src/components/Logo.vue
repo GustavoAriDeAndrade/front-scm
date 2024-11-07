@@ -1,6 +1,6 @@
 <template>
   <figure id="logo">
-    <img class="img-responsive" alt="Logo" :src="logoSrc">
+    
   </figure>
 </template>
 

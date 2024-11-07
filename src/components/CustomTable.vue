@@ -24,26 +24,36 @@
                                 </v-select>
                         </div>
                         <div class="col-md-2 d-flex justify-end align-center btn-opcoes-headers">
-                                <v-btn light class="secondary-button" @click="activeMenuColunas">
-                                        Opções
-                                </v-btn>
-                                <transition name="fade">
-                                        <div v-if="menu_colunas_" class="sub-menu-headers">
-                                                <span class="span-titulo-submenu">
-                                                        Visibilidade das Colunas
-                                                </span>
-                                                <ul v-for="(option, i) in colums" :key="option.value">
-                                                        <li>
-                                                                <v-btn class="btn-opcao-coluna" @click="changeColums(i)">    
-                                                                        <v-icon v-if="option.display" dark>mdi-check</v-icon>
-                                                                        <v-icon v-else dark>mdi-cancel</v-icon>
-                                                                        {{option.text}}
-                                                                </v-btn>
-                                                        </li>
-                                                </ul>
+                                <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                <v-btn light class="secondary-button" @click="activeMenuColunas" v-on="on" small>
+                                        <div class="div-icon">
+                                        <!-- Ícone com tamanho ajustado -->
+                                        <v-icon size="small">mdi-filter</v-icon> <!-- Ícone de filtro de colunas -->
                                         </div>
+                                </v-btn>
+                                </template>
+                                <span>Filtrar por</span> <!-- Texto do Tooltip -->
+                                </v-tooltip>
+
+                                <transition name="fade">
+                                <div v-if="menu_colunas_" class="sub-menu-headers">
+                                <span class="span-titulo-submenu">
+                                        Filtrar por:
+                                </span>
+                                <ul v-for="(option, i) in colums" :key="option.value">
+                                        <li>
+                                        <v-btn class="btn-opcao-coluna" @click="changeColums(i)">    
+                                        <v-icon v-if="option.display" dark>mdi-check</v-icon>
+                                        <v-icon v-else dark>mdi-cancel</v-icon>
+                                        {{option.text}}
+                                        </v-btn>
+                                        </li>
+                                </ul>
+                                </div>
                                 </transition>
                         </div>
+
                         <div class="col-12 tabela_">
                                 <v-data-table
                                         :headers="computedHeaders"
@@ -372,20 +382,20 @@
                                         display: flex;
                                         justify-content: center;
                                         align-items: center;
-                                        background: rgba(155, 115, 153, 0.87);
+                                        background: #F9F9F9;
                                         border: 1px solid #C8C8C8;
                                         border-radius: 0 30px 30px 0 ;
                                         width: 30px;
                                         right: 15px;
                                         top: 0;
-                                        height: 94%;
+                                        height: 98%;
                                         cursor: pointer;
                                         svg, i{
                                                 padding: 0 15px;
                                                 width: 45px;
                                                 margin: 0;
                                                 z-index: 1;
-                                                color: #fff;
+                                                color: #C8C8C8;
                                         }
                                 }
                         }

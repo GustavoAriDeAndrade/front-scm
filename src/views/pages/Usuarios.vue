@@ -3,8 +3,12 @@
 	<div id="usuarios">
 		<div class="tabela-usuario">
 			<div class="col-3 titulo">
-				<p>Usuários <v-icon>fas fa-users</v-icon></p>
+				<p>
+					Usuários
+					<v-icon class="fas fa-users" style="font-size: 20px;"></v-icon>
+				</p>
 			</div>
+
 			<div class="col-12 novo-usuario">
 				<!-- botão para ativação da modal -->
 				<v-btn class="primary-button" raised @click="createUser">
@@ -26,22 +30,40 @@
 				ref="tabela"
 			>
 				<template v-slot:ativo="{ item }">
-					<span v-if="item.ativo">
-						Ativo
-						<img src="./../../assets/images/icon-ativo.png">
-					</span>
-					<span v-else>
-						Inativo
-						<img src="./../../assets/images/icon-inativo.png">
-					</span>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+						<span v-on="on">
+							<span v-if="item.ativo">
+							<img src="./../../assets/images/icon-ativo.png">
+							</span>
+							<span v-else>
+							<img src="./../../assets/images/icon-inativo.png">
+							</span>
+						</span>
+						</template>
+						<span v-if="item.ativo">Usuário ativo</span>
+						<span v-else>Usuário inativo</span>
+					</v-tooltip>
 				</template>
+
 				<!-- botões para ativação das modais presentes na tabela -->
 				<template v-slot:acoes="{ item }">
-					<v-btn class="primary-button" raised small @click="editarUsuario(item.id)">
-						<i class="fas fa-cog"></i>
-						Editar
-					</v-btn>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+						<v-btn 
+							class="primary-button" 
+							raised 
+							small 
+							@click="editarProduto(item.id)" 
+							v-on="on"
+						>
+							<i class="fas fa-cog"></i>
+						</v-btn>
+						</template>
+						<span>Editar usuário</span>
+					</v-tooltip>
 				</template>
+
 			</CustomTable>
 			<!-- modal para cadastro/edição de um usuário -->
 			<v-dialog v-model="dialog_usuario" persistent max-width="600px">

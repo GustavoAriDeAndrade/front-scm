@@ -3,15 +3,18 @@
     <div id="vendas">
         <div class="tabela-vendas">
             <div class="col-3 titulo">
-				<p>Pagamentos <v-icon>fas fa-money-bill-wave-alt</v-icon></p>
-			</div>
+                <p>
+                    Pagamentos
+                    <v-icon class="fas fa-money-bill-wave-alt" style="font-size: 20px;"></v-icon>
+                </p>
+            </div>
+
             <!-- Filtros -->
             <div class="col-12 filtros">
                 <div class="row row-filtros">
                     <!-- filtros para os gráficos -->
                     <div class="col-12 selects">
                         <v-form ref="form_selects">
-                            <v-icon>fas fa-filter</v-icon>
                             <v-select
                                 :items="clientes"
                                 item-text="nome" 
@@ -70,11 +73,22 @@
                 </template>
                 <!-- botões para ativação das modais presentes na tabela -->
                 <template v-slot:acoes="{ item }">
-                    <v-btn class="primary-button" raised small @click="visualizarVenda(item.id)">
-                        <i class="fas fa-eye"></i>
-                        Visualizar
-                    </v-btn>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                        <v-btn 
+                            class="primary-button" 
+                            raised 
+                            small 
+                            @click="visualizarVenda(item.id)" 
+                            v-on="on"
+                        >
+                            <i class="fas fa-eye"></i>
+                        </v-btn>
+                        </template>
+                        <span>Visualizar</span>
+                    </v-tooltip>
                 </template>
+
             </CustomTable>
             <!-- modal para pagar uma parcela -->
             <v-dialog v-model="dialog_venda" persistent max-width="850px">
@@ -301,7 +315,7 @@
         // variável para armazenar os status para filtro
         status_filtro: [
             {
-                nome: 'Pendente Pagamento',
+                nome: 'Pagamento pendente',
                 valor: false
             },
             {

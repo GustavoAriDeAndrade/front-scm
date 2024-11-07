@@ -3,8 +3,12 @@
 	<div id="clientes">
 		<div class="tabela-cliente">
 			<div class="col-3 titulo">
-				<p>Clientes <v-icon>fas fa-user-friends</v-icon></p>
+				<p>
+					Clientes
+					<v-icon class="fas fa-user-friends" style="font-size: 20px;"></v-icon>
+				</p>
 			</div>
+
 			<div class="col-12 novo-cliente">
 				<v-btn class="primary-button" raised @click="createCliente">
 					<i class="fas fa-user-plus"></i> 
@@ -24,26 +28,57 @@
 				ref="tabela"
 			>
 				<template v-slot:ativo="{ item }">
-					<span v-if="item.ativo">
-						Ativo
-						<img src="./../../assets/images/icon-ativo.png">
-					</span>
-					<span v-else>
-						Inativo
-						<img src="./../../assets/images/icon-inativo.png">
-					</span>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+						<span v-on="on">
+							<span v-if="item.ativo">
+							<img src="./../../assets/images/icon-ativo.png">
+							</span>
+							<span v-else>
+							<img src="./../../assets/images/icon-inativo.png">
+							</span>
+						</span>
+						</template>
+						<span v-if="item.ativo">Cliente ativo</span>
+						<span v-else>Cliente inativo</span>
+					</v-tooltip>
 				</template>
+
 				<!-- botões para ativação das modais presentes na tabela -->
 				<template v-slot:acoes="{ item }">
-					<v-btn class="primary-button" raised small @click="visualizarPagamentos(item.id)">
-						<i class="fas fa-money-bill-wave-alt"></i>
-						Pagamentos
-					</v-btn>
-					<v-btn class="primary-button" raised small @click="editarCliente(item.id)" style="margin-left: 5px;">
-						<i class="fas fa-cog"></i>
-						Editar
-					</v-btn>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+						<v-btn 
+							color="success" 
+							class="primary-button" 
+							raised 
+							small 
+							@click="visualizarPagamentos(item.id)" 
+							v-on="on"
+						>
+							<i class="fas fa-money-bill-wave-alt"></i>
+						</v-btn>
+						</template>
+						<span>Visualizar pagamentos</span>
+					</v-tooltip>
+
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on }">
+						<v-btn 
+							class="primary-button" 
+							raised 
+							small 
+							@click="editarCliente(item.id)" 
+							style="margin-left: 5px;" 
+							v-on="on"
+						>
+							<i class="fas fa-cog"></i>
+						</v-btn>
+						</template>
+						<span>Editar cliente</span>
+					</v-tooltip>
 				</template>
+
 			</CustomTable>
 			<!-- modal para cadastro/edição de um cliente -->
 			<v-dialog v-model="dialog_cliente" persistent max-width="600px">
