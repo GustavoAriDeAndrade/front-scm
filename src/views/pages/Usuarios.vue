@@ -370,6 +370,8 @@
 					grupo: '',
 					status: '',
 				}
+				// reinicia a validação para remover os erros visuais
+				this.$refs.form_usuario.reset()
 			},
 		},
 		// variaveis computadas em tempo real
