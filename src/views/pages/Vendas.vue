@@ -387,7 +387,6 @@
             // variável para armazenar os dados da venda
             venda: {
                 cliente_id: '',
-                usuario_id: '',
                 produtos: [],
                 valor_total: 0.00,
                 valor_desconto: 0.00,
@@ -463,8 +462,6 @@
             	this.getProdutos()
                 // buscamos as formas de pagamento cadastradas
             	this.getFormasPagamento()
-                // atribui o usuário que está realizando a venda
-                this.venda.usuario_id = this.$store.getters.user.id
 			},
 			// função para pegar os clientes
 			async getClientes(){
@@ -549,7 +546,7 @@
                     // coleta os dados da compra
                     let dados = {
                         cliente_id: this.venda.cliente_id.toString(),
-                        usuario_id: this.venda.usuario_id.toString(),
+                        usuario_id: this.$store.getters.user.id.toString(),
                         produtos: this.venda.produtos,
                         valor_total: parseFloat(this.venda.valor_total) - parseFloat(this.venda.valor_desconto),
                         valor_entrada: parseFloat(this.venda.valor_entrada),
@@ -850,7 +847,6 @@
                 // limpa os campos
                 this.venda = {
                     cliente_id: '',
-                    usuario_id: '',
                     produtos: [],
                     valor_total: 0.00,
                     valor_entrada: 0.00,
