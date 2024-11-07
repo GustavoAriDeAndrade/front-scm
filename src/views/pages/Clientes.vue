@@ -526,6 +526,8 @@
 					rua: '',
 					numero: '',
 				}
+				// reinicia a validação para remover os erros visuais
+				this.$refs.form_cliente.reset()
 			},
 			// função para fechar a modal com as compras do cliente
 			closePagamento(){

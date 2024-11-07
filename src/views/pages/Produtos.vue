@@ -291,6 +291,8 @@
                 nome: '',
                 ativo: '',
             }
+            // reinicia a validação para remover os erros visuais
+            this.$refs.form_produto.reset()
         },
     }
 }
