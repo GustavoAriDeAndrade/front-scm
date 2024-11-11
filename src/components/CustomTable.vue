@@ -39,7 +39,7 @@
                                 <transition name="fade">
                                 <div v-if="menu_colunas_" class="sub-menu-headers">
                                 <span class="span-titulo-submenu">
-                                        Filtrar por:
+                                        Filtrar por:    
                                 </span>
                                 <ul v-for="(option, i) in colums" :key="option.value">
                                         <li>
@@ -426,8 +426,10 @@
                                                         }
                                                         .acoes{
                                                                 button{
+
                                                                         padding: 0 10px !important;
                                                                         span{
+                                                                                margin-right: -5px;
                                                                                 font-size: 12px;
                                                                                 svg, i{
                                                                                         margin-right: 5px;
@@ -440,6 +442,7 @@
                                                                 align-items: center;
                                                                 justify-content: center;
                                                                 img{
+                                                                        
                                                                         width: 25px;
                                                                         cursor: pointer;
                                                                 }

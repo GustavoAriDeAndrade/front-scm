@@ -409,7 +409,7 @@
 			flex-wrap: wrap;
 			align-items: center;
 			font-weight: 600;
-			color: #11263C;
+			color: #010102;
 		}
 		.v-card{
 			background-color: #f9f9f9;
@@ -420,12 +420,12 @@
 				flex-wrap: wrap;
 				align-items: center;
 				font-weight: 600;
-				color: rgba(17, 38, 60, 1);
+				color: rgb(0, 0, 0);
 			}
 			svg{
 				margin-left: 15px;
 				path{
-					fill: rgba(17, 38, 60, 1);
+					fill: rgb(0, 0, 0);
 				}
 			}
 		}

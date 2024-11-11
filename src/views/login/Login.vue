@@ -6,7 +6,7 @@ login
 				<div class="row">
 					<div class="col-12">
 						<h2>
-							<span>Entrar</span>
+							<span>ENTRAR</span>
 						</h2>
 					</div>
 				</div>
@@ -39,10 +39,6 @@ login
 					</div>
 				</div>
 			</v-form>
-			<div class="col-12 links">
-				<router-link to="/politica-de-privacidade">Política de Privacidade</router-link>
-				<router-link to="/recuperar-senha">Termos</router-link>
-			</div>
 		</div>
     <Loader v-if="loading"/>
 	</div>
@@ -98,42 +94,52 @@ login
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
-		background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+		background: #fffbd4;
 		background-size: cover;
 		position: relative;
 	}
 
 	.login-meio {
-		background: #FFFFFF;
-		box-shadow: -6px -6px 20px rgba(255, 255, 255, 0.3), 6px 6px 20px rgba(0, 0, 0, 0.1);
+		background: #ffffff;
 		border-radius: 16px;
 		padding: 25px;
 		width: 100%;
 		max-width: 400px;
-		min-height: 350px;
-		position: relative;
-		z-index: 10;
+		min-height: 400px;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
+		align-items: center; 
+		justify-content: center;
+		box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); 
+		margin-left: -20px;
 	}
 
 	h2 {
-		font-weight: 300;
+		font-weight: 350;
 		font-size: 24px;
 		line-height: 36px;
-		color: rgba(48, 48, 48, 0.8);
+		color: #000000;
 		text-align: center;
 		margin-bottom: 20px;
 	}
 
 	.input-group {
+		width: 125%;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
 		margin-bottom: 15px;
+		align-items: center;
+		margin-left: -20px !important; 
 	}
 
 	.v-text-field {
 		background: #FFFFFF;
 		border-radius: 12px;
+		width: 100%;
+		max-width: 350px; 
+		padding: 10px 15px; 
+
 	}
 
 	.v-input--hide-spin-buttons input[type=number] {
@@ -144,17 +150,20 @@ login
 	.btn-entrar {
 		display: flex;
 		justify-content: center;
+		width: 100%;
 		margin-bottom: 15px;
+		
 	}
 
 	.custom-btn {
-		background-color: #C9A8C1 !important;
+		background-color: #352116 !important;
 		color: #fff !important;
 		box-shadow: -4px -4px 12px rgba(255, 255, 255, 0.3), 4px 4px 12px rgba(0, 0, 0, 0.1);
 		border-radius: 12px;
 		font-size: 16px;
-		width: 100%;
-		max-width: 200px;
+		width: 80%;
+		max-width: 250px;
+		
 	}
 
 	.fa-rotate-90 {
@@ -175,5 +184,8 @@ login
 			font-size: 14px;
 			color: rgba(0, 0, 0, 0.6);
 		}
+	}
+	.col-12{
+		max-width: 110%;
 	}
 </style>
