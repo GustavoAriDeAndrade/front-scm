@@ -15,78 +15,64 @@
 						<li class="horario">
 							{{hora}}
 						</li>
+						<li class="nome">
+							{{$store.getters.user.nome}}
+						</li>
 					</ul>
 				</div>
 				<div class="usuario">
-					
-						<!--menu para interação do usuário-->
-						<li v-if="$store.getters.screen_size.width >= 768">
-							<v-menu
-								v-model="menu"
-								:close-on-content-click="false"
-								:nudge-width="200"
-								offset-y
-								left
-								bottom
-							>
-								<template v-slot:activator="{ on, attrs }">
-									<button 
-										@click="activeMenu" 
-										color="#f4f6fa"
-										v-bind="attrs"
-										v-on="on"
+					<!--menu para interação do usuário-->
+					<li v-if="$store.getters.screen_size.width >= 768">
+						<v-menu
+							v-model="menu"
+							:close-on-content-click="false"
+							:nudge-width="200"
+							offset-y
+							left
+							bottom
+						>
+							<template v-slot:activator="{ on, attrs }">
+								<button 
+									@click="activeMenu" 
+									color="#f4f6fa"
+									v-bind="attrs"
+									v-on="on"
+								>
+									<i class="fas fa-user"></i>
+									<i class="fas fa-chevron-down"></i>
+								</button>
+							</template>
+							
+							<v-card>
+								<v-list>
+									<v-list-item>						
+									<v-list-item-content>
+										<v-list-item-title>{{$store.getters.user.nome}}</v-list-item-title>
+										<v-list-item-subtitle>{{$store.getters.user.email}}</v-list-item-subtitle>
+									</v-list-item-content>
+									</v-list-item>
+								</v-list>
+						
+								<v-divider></v-divider>
+						
+								<v-card-actions>
+									<v-btn
+										text
+										@click="menu = false"
 									>
-										<i class="fas fa-user"></i>
-										<i class="fas fa-chevron-down"></i>
-									</button>
-								</template>
-								
-								<v-card>
-									<v-list>
-										<v-list-item>						
-										<v-list-item-content>
-											<v-list-item-title>{{$store.getters.user.nome}}</v-list-item-title>
-											<v-list-item-subtitle>{{$store.getters.user.email}}</v-list-item-subtitle>
-										</v-list-item-content>
-							
-										<v-list-item-action>
-											<v-tooltip bottom>
-												<template v-slot:activator="{ on: tooltip }">
-													<v-btn
-														icon
-														@click="editarPerfil"
-														color="#727375"	
-														v-on="tooltip"
-													>
-														<i class="fas fa-user-edit"></i>
-													</v-btn>
-												</template>
-												<span>Editar Perfil</span>
-											</v-tooltip>
-										</v-list-item-action>
-										</v-list-item>
-									</v-list>
-							
-									<v-divider></v-divider>
-							
-									<v-card-actions>
-										<v-btn
-											text
-											@click="menu = false"
-										>
-											Cancelar
-										</v-btn>
-										<v-spacer></v-spacer>
-										<v-btn
-											color="primary"
-											text
-										>									
-											<a href="/logout">Sair</a>
-										</v-btn>
-									</v-card-actions>
-								</v-card>
-							</v-menu>
-						</li>
+										Cancelar
+									</v-btn>
+									<v-spacer></v-spacer>
+									<v-btn
+										color="primary"
+										text
+									>									
+										<a href="/logout">Sair</a>
+									</v-btn>
+								</v-card-actions>
+							</v-card>
+						</v-menu>
+					</li>
 				</div>
 			</div>
 			<!--modal para que o usuário possa editar seus dados pessoais-->
@@ -284,21 +270,6 @@
 						this.loading = false
 					}
 				},
-				// função para abrir a modal de edição de perfil
-				async editarPerfil(){
-					// abre a modal de edição do usuário
-					this.dialog_perfil= true
-					// coloca o componente como loading
-					this.loading = true
-					// atribui o id do usuário a partir do store
-					this.perfil.id = this.$store.getters.user.id,
-					// atribui o nome do usuário a partir do store
-					this.perfil.nome = this.$store.getters.user.nome,
-					// atribui o email do usuário a partir do store
-					this.perfil.email = this.$store.getters.user.email,
-					// retira o loading do componente
-					this.loading = false
-				},
 				// função que roda quando é fechada a modal de edição de perfil
 				async closePerfil(){
 					// fecha a modal
@@ -427,6 +398,14 @@
 								align-items: center;
 								color: #413240;
 							}
+							&.nome{
+								font-style: normal;
+								font-weight: 550;
+								font-size: 15px;
+								line-height: 20px;
+								align-items: center;
+								color: #413240;
+							}
 						}
 					}
 				}
@@ -454,8 +433,6 @@
 							display: flex;
 							align-items: center;
 							justify-content: center;
-							color: $primaryfontcolor;
-							border: 2px solid $primaryfontcolor;
 							text-transform: uppercase;
 						}
 					}
@@ -478,7 +455,6 @@
 							bottom: 0;
 							left: 0;
 							border-radius: 10px;
-							// border: 1px solid red;
 						}
 						&:after{
 							transform: rotate(45deg) translateX(-50%);

@@ -48,12 +48,6 @@
 			resposta: {},
 			all_menus: [
 				{
-					link: '/dashboard',
-					name: 'Início',
-					icon: 'fas fa-ellipsis-v',
-					group: ['admin', 'caixa'],
-				},
-				{
 					link: '/usuarios',
 					name: 'Usuários',
 					icon: 'fas fa-users',

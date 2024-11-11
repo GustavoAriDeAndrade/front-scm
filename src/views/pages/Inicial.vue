@@ -1,42 +1,7 @@
 
 <template>
   <div id="inicio">
-    <div class="button-row">
-      <button @click="goToPage('Clientes')" class="custom-button">
-        <span class="icone">
-          <i class="fas fa-user-friends"></i>
-        </span>
-        <span class="texto">
-          Clientes
-        </span>
-      </button>
-      <button @click="goToPage('Produtos')" class="custom-button">
-        <span class="icone">
-          <i class="fas fa-tshirt"></i>
-        </span>
-        <span class="texto">
-          Produtos
-        </span>
-      </button>
-    </div>
-    <div class="button-row">
-      <button @click="goToPage('Vendas')" class="custom-button">
-        <span class="icone">
-          <i class="fas fa-store"></i>
-        </span>
-        <span class="texto">
-          Vendas
-        </span>
-      </button>
-      <button @click="goToPage('Pagamentos')" class="custom-button">
-        <span class="icone">
-          <i class="fas fa-money-bill-wave-alt"></i>
-        </span>
-        <span class="texto">
-          Pagamentos
-        </span>
-      </button>
-    </div>
+    
   </div>
 </template>
 

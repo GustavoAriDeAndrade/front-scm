@@ -2,13 +2,24 @@
 <template>
     <div id="produtos">
         <div class="tabela-produtos">
-            <div class="col-3 titulo">
-                <p>
-                    Produtos
-                    <v-icon class="fas fa-tshirt" style="font-size: 20px;"></v-icon>
-                </p>
-            </div>
-
+            <div class="col-12">
+				<v-row align="center" justify="space-between">
+					<!-- Coluna do título -->
+					<v-col cols="auto">
+					<div class="titulo">
+						<p>
+                        Produtos
+						<v-icon class="fas fa-tshirt" style="font-size: 20px;"></v-icon>
+						</p>
+					</div>
+					</v-col>
+					
+					<!-- Coluna do botão de ajuda -->
+					<v-col cols="auto">
+					<v-btn class="primary-button" @click="dialog_ajuda = true">Ajuda</v-btn>
+					</v-col>
+				</v-row>
+			</div>
             <!-- botão para abrir a modal-->
              <div class="col-12 novo-produto">
                     <v-btn
@@ -135,6 +146,30 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!-- Modal de ajuda sobre a tela-->
+        <v-dialog v-model="dialog_ajuda" max-width="500">
+            <v-card>
+              <v-card-title class="headline">Ajuda: Tela de Produtos</v-card-title>
+              <v-card-text>
+                <p><strong>1. Para cadastrar um novo produto:</strong></p>
+                <ul>
+                  <li>Clique em "+ Novo Produto".</li>
+                  <li>Preencha o nome e o preço do produto.</li>
+                  <li>Clique em Salvar.</li>
+                </ul>
+                <p><strong>2. Para editar um produto:</strong></p>
+                <ul>
+                  <li>Clique no ícone de engrenagem ao lado do produto desejado.</li>
+                  <li>Altere o nome, preço ou status (ativo/inativo).</li>
+                </ul>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <!-- Botão para fechar o modal -->
+                <v-btn color="primary" text @click="dialog_ajuda = false">Fechar</v-btn>
+              </v-card-actions>
+            </v-card>
+        </v-dialog>
         <DialogMensagem :visible="dialog_resposta" :mensagem="resposta" @close="dialog_resposta=false"/>
         <Loader v-if="loading"/>
     </div>
@@ -169,6 +204,8 @@
         dialog_produto: false,
         // variável para mostrar a modal de informação
         dialog_resposta: false,
+        // variável para mostrar a modal de ajuda
+        dialog_ajuda: false,
         // variável para a mensagem de resposta
         resposta: {},
         // variável para o componente de loading
@@ -255,8 +292,8 @@
                 if(resp.status != 200 && resp.status != 201){
                     // atribui o título da mensagem
                     this.resposta.titulo = 'Algo deu errado!'
-                    // atribui o corpo da mensagem
-                    this.resposta.mensagem = await resp.data.message || resp.data.error
+                    // atribui o corpo da mensagem 
+                    this.resposta.mensagem = await resp.data.message || resp.data.errors[0].message
                     // mostra a mensagem
                     this.dialog_resposta = true
                 }else{

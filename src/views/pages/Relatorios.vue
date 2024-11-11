@@ -1,9 +1,24 @@
 <template>
     <div id="relatorios">
         <div class="graficos">
-            <div class="col-3 titulo">
-                <p>Relatórios <v-icon>fas fa-chart-bar</v-icon></p>
-            </div>
+			<div class="col-12">
+				<v-row align="center" justify="space-between">
+					<!-- Coluna do título -->
+					<v-col cols="auto">
+					<div class="titulo">
+						<p>
+                        Relatórios
+						<v-icon class="fas fa-chart-bar" style="font-size: 20px;"></v-icon>
+						</p>
+					</div>
+					</v-col>
+					
+					<!-- Coluna do botão de ajuda -->
+					<v-col cols="auto">
+					<v-btn class="primary-button" @click="dialog_ajuda = true">Ajuda</v-btn>
+					</v-col>
+				</v-row>
+			</div>
             <div class="col-12 filtros">
                 <div class="row row-filtros">
                     <!-- filtros para os gráficos -->
@@ -205,6 +220,25 @@
                     <i class="fas fa-check" style="margin-left: 5px;"></i> 
                 </v-btn>
             </div>
+			<!-- Modal de ajuda sobre a tela-->
+            <v-dialog v-model="dialog_ajuda" max-width="500">
+                <v-card>
+                  <v-card-title class="headline">Ajuda: Tela de Relatórios</v-card-title>
+                  <v-card-text>
+                    <p><strong>1. Para gerar um novo relatório:</strong></p>
+                    <ul>
+                      <li>Selecione o tipo de relatório desejado.</li>
+                      <li>Ajuste o filtro da data, conforme necessário.</li>
+                      <li>Clique em Filtrar.</li>
+                    </ul>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <!-- Botão para fechar o modal -->
+                    <v-btn color="primary" text @click="dialog_ajuda = false">Fechar</v-btn>
+                  </v-card-actions>
+                </v-card>
+            </v-dialog>
             <DialogMensagem :visible="dialog_resposta" :mensagem="resposta" @close="dialog_resposta=false"/>
             <Loader v-if="loading"/>
         </div>
@@ -240,6 +274,8 @@
         data: () => ({
             // variável para mostrar a modal de informação
             dialog_resposta: false,
+			// variável para mostrar a modal de ajuda
+			dialog_ajuda: false,
             // variável para a mensagem de resposta
             resposta: {},
             // variável para o componente de loading

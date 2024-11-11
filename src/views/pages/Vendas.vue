@@ -1,13 +1,24 @@
 <template>
     <div id="caixa">
         <div class="campos">
-            <div class="col-3 titulo">
-                <p>
-                    Vendas
-                    <v-icon class="fas fa-store" style="font-size: 20px;"></v-icon>
-                </p>
-            </div>
-
+            <div class="col-12">
+				<v-row align="center" justify="space-between">
+					<!-- Coluna do título -->
+					<v-col cols="auto">
+					<div class="titulo">
+						<p>
+                        Vendas
+						<v-icon class="fas fa-store" style="font-size: 20px;"></v-icon>
+						</p>
+					</div>
+					</v-col>
+					
+					<!-- Coluna do botão de ajuda -->
+					<v-col cols="auto">
+					<v-btn class="primary-button" @click="dialog_ajuda = true">Ajuda</v-btn>
+					</v-col>
+				</v-row>
+			</div>
             <div class="col-12 filtros">
                 <div class="row">
                     <div class="col-5">
@@ -337,6 +348,42 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+			<!-- Modal de ajuda sobre a tela-->
+            <v-dialog v-model="dialog_ajuda" max-width="500">
+                <v-card>
+                  <v-card-title class="headline">Ajuda: Tela de Vendas</v-card-title>
+                  <v-card-text>
+                    <p><strong>1. Para registrar uma nova venda:</strong></p>
+                    <ul>
+                      <li>Selecione o Cliente que está comprando.</li>
+                      <li>Clique em Adicionar Produto Ao Carrinho:</li>
+                      <ul>
+                        <li>Escolha o produto desejado entre os cadastrados.</li>
+                        <li>Informe a quantidade de produtos.</li>
+                        <li>Selecione a Forma de Pagamento.</li>
+                        <li>Se necessário, informe o número de Parcelas.</li>
+                      </ul>
+                    </ul>
+                    <p><strong>2. Para editar ou excluir um produto adicionado:</strong></p>
+                    <ul>
+                      <li>Clique nos ícones de Editar ou Excluir ao lado do produto no carrinho.</li>
+                    </ul>
+                    <p><strong>3. Para concluir a venda:</strong></p>
+                    <ul>
+                      <li>Clique em Finalizar Compra para registrar a venda.</li>
+                    </ul>
+                    <p><strong>4. Para cancelar a venda:</strong></p>
+                    <ul>
+                      <li>Clique em Cancelar Compra para limpar todos os campos e reiniciar o processo.</li>
+                    </ul>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <!-- Botão para fechar o modal -->
+                    <v-btn color="primary" text @click="dialog_ajuda = false">Fechar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             <DialogMensagem :visible="dialog_resposta" :mensagem="resposta" @close="dialog_resposta=false"/>
             <Loader v-if="loading"/>
         </div>
@@ -374,6 +421,8 @@
             dialog_carrinho: false,
 			// variável para mostrar a modal para criar um cliente
 			dialog_remove_carrinho: false,
+			// variável para mostrar a modal de ajuda
+			dialog_ajuda: false,
             // variável para a mensagem de resposta
             resposta: {},
             // variável para o componente de loading
