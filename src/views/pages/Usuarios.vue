@@ -2,13 +2,24 @@
 <template>
 	<div id="usuarios">
 		<div class="tabela-usuario">
-			<div class="col-3 titulo">
-				<p>
-					Usuários
-					<v-icon class="fas fa-users" style="font-size: 20px;"></v-icon>
-				</p>
+			<div class="col-12">
+				<v-row align="center" justify="space-between">
+					<!-- Coluna do título -->
+					<v-col cols="auto">
+					<div class="titulo">
+						<p>
+						Usuários
+						<v-icon class="fas fa-users" style="font-size: 20px;"></v-icon>
+						</p>
+					</div>
+					</v-col>
+					
+					<!-- Coluna do botão de ajuda -->
+					<v-col cols="auto">
+					<v-btn class="primary-button" @click="dialog_ajuda = true">Ajuda</v-btn>
+					</v-col>
+				</v-row>
 			</div>
-
 			<div class="col-12 novo-usuario">
 				<!-- botão para ativação da modal -->
 				<v-btn class="primary-button" raised @click="createUser">
@@ -54,7 +65,7 @@
 							class="primary-button" 
 							raised 
 							small 
-							@click="editarProduto(item.id)" 
+							@click="editarUsuario(item.id)" 
 							v-on="on"
 						>
 							<i class="fas fa-cog"></i>
@@ -168,6 +179,37 @@
 					</v-card-actions>
 				</v-card>
 			</v-dialog>
+			<!-- Modal de ajuda sobre a tela-->
+			<v-dialog v-model="dialog_ajuda" max-width="500">
+				<v-card>
+				  <v-card-title class="headline">Ajuda: Tela de Usuários</v-card-title>
+				  <v-card-text>
+					<p><strong>1. Para cadastrar um novo usuário:</strong></p>
+					<ul>
+					  <li>Clique no botão "+ Novo Usuário".</li>
+					  <li>Preencha o nome, e-mail (não pode repetir), senha e grupo da pessoa.</li>
+					  <li>Clique em Salvar.</li>
+					</ul>
+					<p><strong>2. Para editar um usuário:</strong></p>
+					<ul>
+					  <li>Clique no ícone de engrenagem ao lado do nome.</li>
+					  <li>Atualize as informações e clique em Salvar.</li>
+					</ul>
+					<p><strong>3. Dicas:</strong></p>
+					<ul>
+					  <li>O e-mail de cada pessoa deve ser único.</li>
+					  <li>O círculo verde indica que o usuário está ativo.</li>
+					</ul>
+				  </v-card-text>
+				  <v-card-actions>
+					<v-spacer></v-spacer>
+					<!-- Botão para fechar o modal -->
+					<v-btn color="darken-1" text style="text-transform: capitalize; font-size: 16px;" @click="dialog_ajuda = false">
+						Fechar
+					</v-btn>
+				  </v-card-actions>
+				</v-card>
+			</v-dialog>
 			<DialogMensagem :visible="dialog_resposta" :mensagem="resposta" @close="dialog_resposta=false"/>
 			<Loader v-if="loading"/>
 		</div>
@@ -203,6 +245,8 @@
 			dialog_usuario: false,
 			// variável para mostrar a modal de informação
 			dialog_resposta: false,
+			// variável para mostrar a modal de ajuda
+			dialog_ajuda: false,
 			// variável para a mensagem de resposta
 			resposta: {},
 			// variável para o loading
@@ -313,7 +357,7 @@
 						// atribui o título da mensagem 
 						this.resposta.titulo = 'Algo deu errado!'
 						// atribui o corpo da mensagem 
-						this.resposta.mensagem = await resp.data.message || resp.data.error
+						this.resposta.mensagem = await resp.data.message || resp.data.errors[0].message
 						// mostra a mensagem
 						this.dialog_resposta = true
 					// caso tenha dado tudo certo

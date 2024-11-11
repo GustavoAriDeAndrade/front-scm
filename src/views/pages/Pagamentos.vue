@@ -2,13 +2,24 @@
 <template>
     <div id="vendas">
         <div class="tabela-vendas">
-            <div class="col-3 titulo">
-                <p>
-                    Pagamentos
-                    <v-icon class="fas fa-money-bill-wave-alt" style="font-size: 20px;"></v-icon>
-                </p>
-            </div>
-
+            <div class="col-12">
+				<v-row align="center" justify="space-between">
+					<!-- Coluna do título -->
+					<v-col cols="auto">
+					<div class="titulo">
+						<p>
+                        Pagamentos
+						<v-icon class="fas fa-money-bill-wave-alt" style="font-size: 20px;"></v-icon>
+						</p>
+					</div>
+					</v-col>
+					
+					<!-- Coluna do botão de ajuda -->
+					<v-col cols="auto">
+					<v-btn class="primary-button" @click="dialog_ajuda = true">Ajuda</v-btn>
+					</v-col>
+				</v-row>
+			</div>
             <!-- Filtros -->
             <div class="col-12 filtros">
                 <div class="row row-filtros">
@@ -163,7 +174,7 @@
                                                 </span>
                                             </template>
                                             <template v-slot:[`item.valor_restante`]="{ item }">
-                                                <span v-if="item.valor_restante > 0">
+                                                <span v-if="item.valor_restante > 0" style="color: red;">
                                                     R$ {{ item.valor_restante }}
                                                 </span>
                                                 <span v-else style="color: green;">
@@ -247,12 +258,12 @@
             <!-- modal para conclusão do pagamento -->
             <v-dialog v-model="dialog_prosseguir" persistent max-width="450px">
                 <v-card>
-                    <v-card-title>
-                        <span class="headline">Pagamento realizado com sucesso!</span>
+                    <v-card-title class="headline">
+                        Pagamento realizado com sucesso!
                     </v-card-title>
                     <v-card-text>
                         <v-container style="text-align: center;">
-                            <h3>Deseja pagar mais uma parcela dessa compra?</h3><br>
+                            Deseja pagar mais uma parcela dessa compra?<br>
                         </v-container>
                     </v-card-text>
                     <v-card-actions>
@@ -264,6 +275,39 @@
                             Pagar
                         </v-btn>
                     </v-card-actions>
+                </v-card>
+            </v-dialog>
+			<!-- Modal de ajuda sobre a tela-->
+            <v-dialog v-model="dialog_ajuda" max-width="500">
+                <v-card>
+                  <v-card-title class="headline">Ajuda: Tela de Pagamentos</v-card-title>
+                  <v-card-text>
+                    <p><strong>1. Para visualizar pagamentos:</strong></p>
+                    <ul>
+                      <li>Selecione o cliente desejado no campo "Cliente".</li>
+                      <li>Escolha o status do pagamento: Quitado ou Pagamento pendente.</li>
+                      <li>Clique em Filtrar.</li>
+                    </ul>
+                    <p><strong>2. Para visualizar detalhes do pagamento:</strong></p>
+                    <ul>
+                      <li>Clique no ícone de olho ao lado do pagamento.</li>
+                      <li>Na tela que aparece, você poderá ver as informações do cliente, os produtos comprados e as parcelas, se houver.</li>
+                    </ul>
+                    <p><strong>3. Para registrar um pagamento:</strong></p>
+                    <ul>
+                      <li>Clique no ícone de verificação (check) na parcela desejada.</li>
+                      <li>Digite o valor que será pago. O sistema recalculará o valor restante.</li>
+                      <li>
+                        Exemplo: Se a compra foi de R$ 100, dividida em duas parcelas, e o cliente pagar apenas R$ 40 na primeira parcela, o sistema registrará um saldo de R$ 10 para completar essa primeira parcela.
+                      </li>
+                      <li>Após o pagamento da primeira parcela estar completo, o sistema permitirá o pagamento da próxima parcela.</li>
+                    </ul>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <!-- Botão para fechar o modal -->
+                    <v-btn color="primary" text @click="dialog_ajuda = false">Fechar</v-btn>
+                  </v-card-actions>
                 </v-card>
             </v-dialog>
         <DialogMensagem :visible="dialog_resposta" :mensagem="resposta" @close="dialog_resposta=false"/>
@@ -304,6 +348,8 @@
         dialog_resposta: false,
         // variável para mostrar a modal de continuar pagando parcela
         dialog_prosseguir: false,
+        // variável para mostrar a modal de ajuda
+        dialog_ajuda: false,
         // variável para a mensagem de resposta
         resposta: {},
         // variável para o componente de loading

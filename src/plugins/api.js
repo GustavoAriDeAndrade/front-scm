@@ -117,17 +117,22 @@ class FinerAPI {
 		// tenta executar a ação
 		try {
 			// coleta a instancia atual
-			const current = await this.getCurrent();
+			const current = await this.getCurrent()
 			// retorna uma promise
-			const response = await current.post(url, body, options);
+			const response = await current.post(url, body, options)
 			// retorna a resposta
-			return response;
+			return response
 		// caso de algum erro
-		} catch(e) {
-			// trata o erro
-			this.handleError(e);
-			// continua o erro para cima
-			throw e;
+		}catch(e){
+			// Verifica se o erro é o status 422
+			if(e.response && e.response.status === 422){
+				// Retorna a resposta do erro para que possa ser tratada fora do catch
+				return e.response
+			}else{
+				// Caso seja outro tipo de erro, chama o handleError
+				this.handleError(e)
+				throw e
+			}
 		}
 	};
 	/**
@@ -137,19 +142,24 @@ class FinerAPI {
 		// tenta executar a ação
 		try {
 			// coleta a instancia atual
-			const current = await this.getCurrent();
+			const current = await this.getCurrent()
 			// retorna uma promise
-			const response = await current.put(url, body, options);
+			const response = await current.put(url, body, options)
 			// retorna a resposta
-			return response;
+			return response
 		// caso de algum erro
-		} catch(e) {
-			// trata o erro
-			this.handleError(e);
-			// continua o erro para cima
-			throw e;
+		}catch(e){
+			// Verifica se o erro é o status 422
+			if(e.response && e.response.status === 422){
+				// Retorna a resposta do erro para que possa ser tratada fora do catch
+				return e.response
+			}else{
+				// Caso seja outro tipo de erro, chama o handleError
+				this.handleError(e)
+				throw e
+			}
 		}
-	};
+	}
 	/**
 	 * Efetua uma request de patch
 	 */
