@@ -337,7 +337,7 @@
 
 	<style lang="scss">
 		#nav-bar{
-			background-color:  #FEFAEF;
+			background-color:  #f1deb9ec;
 	;
 			.nav-bar-row{
 				display: flex;
@@ -359,7 +359,7 @@
 							width: 30px;
 							height: 3px;
 							transform: translateY(-50%);
-							background-color:#373737;
+							background-color:#352116;
 							border-radius: 4px;
 							position: relative;
 							transition: all ease .3s; 
@@ -369,7 +369,7 @@
 								display: block;
 								width: 100%;
 								height: 100%;
-								background-color: #373737;
+								background-color: #352116;
 								border-radius: 4px;
 								position: absolute;
 								transition: all ease .3s;
@@ -425,7 +425,7 @@
 								font-size: 15px;
 								line-height: 20px;
 								align-items: center;
-								color: #413240;
+								color: #352116;
 							}
 						}
 					}
@@ -439,7 +439,7 @@
 						align-items: center;
 						background-color: transparent;
 						border: none;
-						color:#413240;
+						color:#352116;
 						display: flex;
 						margin-top: -25px;
 						margin-right: 10px;
@@ -448,7 +448,7 @@
 							margin-right: 15px;
 							height: 35px;
 							width: 35px;
-							background-color: #fff;
+							background-color: #ffffff;
 							border-radius: 100%;
 							font-size: 18px;
 							display: flex;

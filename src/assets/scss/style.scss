@@ -114,14 +114,14 @@ a {
 }
 
 .loader {
-    background-color: rgb(201 163 200 / 87%) !important;
+    background-color: #fffbd4 !important;
     color: #fff !important;
 }
 
 .primary-button {
-    background-color: #d49b7d96 !important;
+    background-color: #352116!important;
     color: #fff !important;
-    border: 1px solid #dba48696;
+    border: 1px solid #352116;
     border-radius: 20px;
     text-transform: capitalize;
     padding: 0 20px !important;
@@ -132,27 +132,30 @@ a {
     }
 
     &:hover {
-        background-color: #fff !important;
-        color: rgba(129, 111, 127, 0.8) !important;
+        background-color: #ffffff !important;
+        color: rgba(46, 6, 6, 0.8) !important;
+        border: 2px solid #fafafa!important;
     }
 }
 
 .secondary-button {
-    background-color: #11263C !important;
+    background-color: #352116!important;
     color: #fff !important;
-    border: 1px solid #11263C;
+    border: 1px solid #352116;
     border-radius: 20px;
     text-transform: capitalize;
     padding: 0 20px !important;
     transition: all ease .3s;
+    width: 20px;
 
     span {
         font-size: 16px;
     }
 
     &:hover {
-        background-color: #fff !important;
-        color: #11263C !important;
+        background-color: #49352a !important;
+        color: #ffffff !important;
+        border: 2px solid #49352a!important;
     }
 }
 

@@ -143,13 +143,12 @@
 			list-style: none;
 			margin: 0;
 			width: 100%;
-			
 			li{
-				border-bottom: 1px solid #F2E1D1;
+				border-bottom: 1px solid #faf8f5f3;
 				a{
 					padding: 15px 30px;
 					display: flex;
-					color: #2D2D23;
+					color: #352116;
 					transition: all ease .3s;
 					align-items: center;
 					.icone{
@@ -167,8 +166,8 @@
 					}
 					&.active,
 					&:hover{
-						color: rgba(37, 37, 37, 0.911);
-						background-color: #fff6e6;
+						color: #5f4019bd;
+						background-color: rgb(241, 222, 185);
 					}
 				}
 			}
@@ -176,11 +175,6 @@
 	}
 	.left:not(.open){
 		#menu-lateral{
-			.top{
-				.logo{
-					padding: 5px;
-				}
-			}
 			ul{
 				li{
 					a{
@@ -212,7 +206,7 @@
 								left: 20px;
 								border-radius: 5px;
 								z-index: 1;
-								background-color: #FFDAA4;
+								background-color: #ffffff;
 							}
 							&:after{
 								transform: rotate(45deg) translateY(-50%);
@@ -224,14 +218,14 @@
 								border-radius: 0 5px;
 							}
 							p{
-								background-color: #FFD9A3;
+								background-color: #ffffff;
 								z-index: 2;
 								border-radius: 5px;
 								position: relative;
 								line-height: 2;
 								&:before{
 									content: '';
-									background-color:  #FFD9A3;
+									background-color:  #ffffff;
 									position: absolute;
 									transform: rotate(45deg) translateY(-50%);
 									width: 20px;
