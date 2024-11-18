@@ -278,12 +278,12 @@
 				{
 					value: 'group.nome',
 					text: 'Grupo',
-					sortable: true,
+					sortable: false,
 				},
 				{
 					value: 'ativo',
 					text: 'Status',
-					sortable: true,
+					sortable: false,
 				},
 				{
 					value: 'acoes',

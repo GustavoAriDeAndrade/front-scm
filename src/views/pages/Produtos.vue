@@ -228,13 +228,13 @@
                 value: 'valor',
                 text: 'Preço',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'ativo',
                 text: 'Status',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'acoes',

@@ -760,7 +760,7 @@
                     return 1
                 }
                 // verifica a data de vencimento da primeira parcela
-                if(moment(this.venda.data_parcela, 'DD/MM/YYYY').format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')){
+                if(moment(this.venda.data_parcela, 'DD/MM/YYYY').isBefore(moment(), 'day')){
                     // atribui a mensagem
                     this.resposta.mensagem = 'Vencimento da primeira parcela não pode ser menor que o dia atual'
                     // retorna 
@@ -898,6 +898,7 @@
                     cliente_id: '',
                     produtos: [],
                     valor_total: 0.00,
+                    valor_desconto: 0.00,
                     valor_entrada: 0.00,
                     forma_pagamento_id: '',
                     quantidade_parcelas: 1,
