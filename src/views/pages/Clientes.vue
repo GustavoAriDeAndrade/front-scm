@@ -377,7 +377,7 @@
 				{
 					value: 'ativo',
 					text: 'Status',
-					sortable: true,
+					sortable: false,
 				},
 				{
 					value: 'acoes',

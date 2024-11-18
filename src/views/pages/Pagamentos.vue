@@ -391,19 +391,19 @@
             {
                 value: 'client.nome',
                 text: 'Cliente',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'valor_parcela',
                 text: 'Valor Parcela',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'payments',
                 text: 'Próx. Vencimento',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'acoes',
@@ -417,19 +417,19 @@
             {
                 value: 'product.nome',
                 text: 'Produto',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'valor_unidade',
                 text: 'Valor Unidade',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'quantidade',
                 text: 'Quantidade',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
         ],
         // variável para o cabeçalho da tabela de parcelas
@@ -437,31 +437,31 @@
             {
                 value: 'parcela',
                 text: 'Parcela',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'valor',
                 text: 'Valor',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'valor_restante',
                 text: 'Valor Restante',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'data_vencimento',
                 text: 'Data Vencimento',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'data_pagamento',
                 text: 'Data Pagamento',
                 align: 'end',
-                sortable: true,
+                sortable: false,
             },
             {
                 value: 'acoes',

@@ -98,14 +98,13 @@ login
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
-		background: url('~@/assets/images/BackgroundEntrar.png') no-repeat center center fixed;
+		background: #E6C4B3;
 		background-size: cover;
 		position: relative;
 	}
 
 	.login-meio {
 		background: #FFFFFF;
-		box-shadow: -6px -6px 20px rgba(255, 255, 255, 0.3), 6px 6px 20px rgba(0, 0, 0, 0.1);
 		border-radius: 16px;
 		padding: 25px;
 		width: 100%;
@@ -148,7 +147,7 @@ login
 	}
 
 	.custom-btn {
-		background-color: #C9A8C1 !important;
+		background-color: #caa796 !important;
 		color: #fff !important;
 		box-shadow: -4px -4px 12px rgba(255, 255, 255, 0.3), 4px 4px 12px rgba(0, 0, 0, 0.1);
 		border-radius: 12px;

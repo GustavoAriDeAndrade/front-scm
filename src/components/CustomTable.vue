@@ -430,7 +430,7 @@
                                                                         span{
                                                                                 font-size: 12px;
                                                                                 svg, i{
-                                                                                        margin-right: 5px;
+                                                                                        margin-right: -1px;
                                                                                 }
                                                                         }
                                                                 }
